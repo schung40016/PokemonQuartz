@@ -3,14 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ISavable
 {
     [SerializeField] string name;
     [SerializeField] Sprite sprite;
-    const float offSetY = 0.3f;
+    
 
-    public event Action OnEncountered;
-    public event Action<Collider2D> OnEnterTrainersView;
     public event Action ShowHud;
 
     private Vector2 input;
@@ -76,33 +74,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnMoveOver()
     {
-        CheckForEncounters();
-        CheckIfInTrainersView();
-    }
+        var colliders = Physics2D.OverlapCircleAll(transform.position - new Vector3(0, character.OffsetY), 0.2f, GameLayers.i.TriggerableLayers);
 
-    //Checks bushes for encounters.
-    private void CheckForEncounters()
-    {
-        // 1.0f => 2.0f
-        //
-        if(Physics2D.OverlapCircle(transform.position - new Vector3(0, offSetY), 0.2f, GameLayers.i.GrassLayer)  != null)
+        foreach (var collider in colliders)
         {
-            //Rolls for encounter
-            if( UnityEngine.Random.Range(1, 101) <= 20 )
+            var triggerable = collider.GetComponent<IPlayerTriggerable>();
+            if (triggerable != null) 
             {
-                character.Animator.IsMoving = false;
-                OnEncountered();
+                triggerable.onPLayerTriggerable(this);
+                break;
             }
-        }
-    }
-
-    private void CheckIfInTrainersView()
-    {
-        var collider = Physics2D.OverlapCircle(transform.position - new Vector3(0, offSetY), 0.2f, GameLayers.i.FovLayer);
-        if (collider != null)
-        {
-            character.Animator.IsMoving = false;
-            OnEnterTrainersView?.Invoke(collider);
         }
     }
 
@@ -117,6 +98,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // CaptureState is used to save data
+    // object can be used to represent any type, including classes
+    public object CaptureState()
+    {
+        float[] position = new float[] { transform.position.x, transform.position.y };
+        return position;
+    }
+
+    // RestoreState is used to restore the data while the game is loading
+    public void RestoreState(object state)
+    {
+        var position = (float[])state;
+        transform.position = new Vector3(position[0], position[1]);
+    }
+
     public string Name
     {
         get => name;
@@ -126,4 +122,6 @@ public class PlayerController : MonoBehaviour
     {
         get => sprite;
     }
+
+    public Character Character => character;
 }
