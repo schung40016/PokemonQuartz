@@ -28,7 +28,7 @@ public class HUD : MonoBehaviour
     //Tracks what section the player is on right now.
     int currentSection;
 
-    GameObject activeSection;
+    public GameObject activeSection;
 
     private void Awake()
     {
@@ -43,13 +43,13 @@ public class HUD : MonoBehaviour
 
     public void startAnimation()
     { 
-        image.transform.localPosition = new Vector3(originalPos.x, 590f);
+        image.transform.localPosition = new Vector3(originalPos.x, 590f);       
     }
 
     // Update is called once per frame
     public void HandleUpdate()
     {
-        image.transform.DOLocalMoveY(originalPos.y, 1f);
+        image.transform.DOLocalMoveY(0, 1f);  //originalPos.y
         if (audioSwitch)
         {
             audio.PlayOneShot(openMenu);
@@ -67,7 +67,7 @@ public class HUD : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            image.transform.DOLocalMoveY(590f, 1f);
+            image.transform.DOLocalMoveY(590f, 1f); // Og: 590f.
             QuittingHud();
         }
     }
@@ -75,12 +75,12 @@ public class HUD : MonoBehaviour
     //Handles section selection.
     public void sectionSelector()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             audio.PlayOneShot(selectSound);
             ++currentSection;
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             audio.PlayOneShot(selectSound);
             --currentSection;
