@@ -2,13 +2,13 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-/PokemonQuartz/[Ll]ibrary/
-/PokemonQuartz/[Tt]emp/
-/PokemonQuartz/[Oo]bj/
-/PokemonQuartz/[Bb]uild/
-/PokemonQuartz/[Bb]uilds/
-/PokemonQuartz/[Ll]ogs/
-/PokemonQuartz/[Mm]emoryCaptures/
+/Testing (1)/[Ll]ibrary/
+/Testing (1)/[Tt]emp/
+/Testing (1)/[Oo]bj/
+/Testing (1)/[Bb]uild/
+/Testing (1)/[Bb]uilds/
+/Testing (1)/[Ll]ogs/
+/Testing (1)/[Mm]emoryCaptures/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
