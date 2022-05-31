@@ -1244,6 +1244,11 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 6793007567464250669, guid: 595e877a88148324f9b9ea7ebb5298f1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 595e877a88148324f9b9ea7ebb5298f1, type: 3}
 --- !u!1 &280749780237395520 stripped

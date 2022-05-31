@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ExteriorSettings/FirstCity.unity
     guid: 7626b6a4a0d47384ba875b52d6443c2b
   - enabled: 1
-    path: Assets/Scenes/ExteriorSettings/Wildland.unity
+    path: Assets/Scenes/ExteriorSettings/Wildland (1of4200).unity
     guid: 84dca1d9808e5f24c9df0ae28708b2a1
   - enabled: 1
     path: Assets/Scenes/ExteriorSettings/Wildland(2).unity
