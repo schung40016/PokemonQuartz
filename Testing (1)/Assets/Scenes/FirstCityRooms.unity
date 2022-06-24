@@ -2057,6 +2057,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LocationPortal
       objectReference: {fileID: 0}
+    - target: {fileID: 7859130668586002602, guid: 7c6987d386e9f6a4bb71b10b0b3e3a8f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c6987d386e9f6a4bb71b10b0b3e3a8f, type: 3}
 --- !u!1 &1176531355
@@ -3517,12 +3522,12 @@ PrefabInstance:
     - target: {fileID: 7859130668586002600, guid: 27037aa7aba324149a386e07d54d10a1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.001
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 7859130668586002600, guid: 27037aa7aba324149a386e07d54d10a1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.501
+      value: -5.5
       objectReference: {fileID: 0}
     - target: {fileID: 7859130668586002600, guid: 27037aa7aba324149a386e07d54d10a1,
         type: 3}
@@ -3582,7 +3587,7 @@ PrefabInstance:
     - target: {fileID: 7859130668586002602, guid: 27037aa7aba324149a386e07d54d10a1,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27037aa7aba324149a386e07d54d10a1, type: 3}

@@ -43203,6 +43203,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7859130668586002583, guid: 27037aa7aba324149a386e07d54d10a1,
+        type: 3}
+      propertyPath: sceneToLoad
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7859130668586002600, guid: 27037aa7aba324149a386e07d54d10a1,
         type: 3}
       propertyPath: m_LocalPosition.x
