@@ -14,6 +14,10 @@ public class PokemonParty : MonoBehaviour
         {
             return pokemons;
         }
+        set
+        {
+            pokemons = value;
+        }
     }
 
     // Initializes all pokemon in player party for battle.

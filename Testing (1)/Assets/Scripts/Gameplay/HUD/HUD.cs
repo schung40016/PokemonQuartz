@@ -65,7 +65,7 @@ public class HUD : MonoBehaviour
     //Quit the HUD.
     public void quitHud()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             image.transform.DOLocalMoveY(590f, 1f); // Og: 590f.
             QuittingHud();

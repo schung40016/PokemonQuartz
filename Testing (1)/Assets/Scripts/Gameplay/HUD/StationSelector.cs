@@ -23,7 +23,7 @@ public class StationSelector : MonoBehaviour
     int currentStation;
 
     //Stores current station playing.
-    StationPlaylist activeStation;
+    private StationPlaylist activeStation;
 
     //Runs the station section
     public void HandleUpdate()
@@ -34,11 +34,11 @@ public class StationSelector : MonoBehaviour
     //Highlights and allows player to make a choice.
     public void stationSelection()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             ++currentStation;
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             --currentStation;
         }
@@ -73,7 +73,7 @@ public class StationSelector : MonoBehaviour
     public void selectStation(StationPlaylist station, Sprite stationArt)
     {
         //None or another radio station was active, play chosen station.
-        if( activeStation != station)
+        if(activeStation != station || activeStation == null)
         {
             //Stop active station if there exists.
             if (activeStation != null)

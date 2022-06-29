@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, ISavable
@@ -18,14 +19,6 @@ public class PlayerController : MonoBehaviour, ISavable
     private void Awake()
     {
         ////Find singleton script from unity and set instance.
-        //GameObject go = GameObject.Find("GlobalControl");
-        //GlobalControl gc = go.GetComponent<GlobalControl>();
-
-        ////Get Sprite from singleton, and set as player's sprite.
-        //this.gameObject.GetComponent<SpriteRenderer>().sprite = gc.getPlayerSprite();
-
-        ////Get and set animator for user.    
-        //this.GetComponent<Animator>().runtimeAnimatorController = gc.getPlayerAnim();
 
         character = GetComponent<Character>();
     }
@@ -87,11 +80,11 @@ public class PlayerController : MonoBehaviour, ISavable
         }
     }
 
-    //Prop up HUD if user wants to.
+    //Props up HUD.
     private void CheckForHud()
     {
         //Pressing escape shows the hud.
-        if ( Input.GetKeyDown(KeyCode.Q))
+        if ( Input.GetKeyDown(KeyCode.Space))
         {
             character.Animator.IsMoving = false;
             ShowHud();
@@ -102,15 +95,26 @@ public class PlayerController : MonoBehaviour, ISavable
     // object can be used to represent any type, including classes
     public object CaptureState()
     {
-        float[] position = new float[] { transform.position.x, transform.position.y };
-        return position;
+        var saveData = new PlayerSaveData()
+        {
+            position = new float[] { transform.position.x, transform.position.y },
+            pokemons = GetComponent<PokemonParty>().Pokemons.Select(p => p.GetSaveData()).ToList()
+        };
+
+        return saveData;
     }
 
     // RestoreState is used to restore the data while the game is loading
     public void RestoreState(object state)
     {
-        var position = (float[])state;
-        transform.position = new Vector3(position[0], position[1]);
+        var saveData = (PlayerSaveData)state;
+
+        // Restore Position.
+        var pos = saveData.position;
+        transform.position = new Vector3(pos[0], pos[1]);
+
+        // Restore Party.
+        GetComponent<PokemonParty>().Pokemons = saveData.pokemons.Select(s => new Pokemon(s)).ToList();
     }
 
     public string Name
@@ -124,4 +128,12 @@ public class PlayerController : MonoBehaviour, ISavable
     }
 
     public Character Character => character;
+}
+
+[Serializable]
+// Stores and saves player data.
+public class PlayerSaveData
+{
+    public float[] position;
+    public List<PokemonSaveData> pokemons;
 }

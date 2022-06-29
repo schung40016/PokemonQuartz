@@ -23,6 +23,11 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        // Initialize Pokemon database.
+        PokemonDB.Init();
+        MoveDB.Init();
+
         ConditionsDB.Init();
     }
 
@@ -115,7 +120,6 @@ public class GameController : MonoBehaviour
     {
         state = GameState.HUD;
         battleSystem.gameObject.SetActive(false);
-        Debug.Log("wee wee!!");
         hud.gameObject.SetActive(true);
     }
 

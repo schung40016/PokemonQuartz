@@ -78,9 +78,11 @@ public class MusicQueue
     {
         foreach(AudioClip clip in tracks)
         {
+            Debug.Log(clip.length);
             playFunction(clip);
 
             yield return new WaitForSeconds(clip.length + delay);
+            // BUG: Can't play the next song in queue because the above code stops working.
         }
     }
 

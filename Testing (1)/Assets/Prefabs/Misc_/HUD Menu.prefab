@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 1903679554679265410}
   - component: {fileID: 1903679554679265411}
   - component: {fileID: 1903679554679265404}
+  - component: {fileID: 8926826285676932799}
   m_Layer: 5
   m_Name: MelloMusic
   m_TagString: Untagged
@@ -114,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -122,7 +123,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 4ac58e659787624489dc3588df989254, type: 3}
-    m_FontSize: 25
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -136,6 +137,37 @@ MonoBehaviour:
   m_Text: 'Mello Musics
 
 '
+--- !u!114 &8926826285676932799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903679554679265409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a71637837066bae4cbef43bdcb3be847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radio: {fileID: 0}
+  musicClips:
+  - {fileID: 8300000, guid: 853da6ffeb4f4484b9c7250643426e3c, type: 3}
+  - {fileID: 8300000, guid: 8ca8917c62c7a60448df0f4b5133d4e2, type: 3}
+  - {fileID: 8300000, guid: 6a9230aa52aab484695e8e1cd0b51d8f, type: 3}
+  - {fileID: 8300000, guid: 7f6acdd08b6e1ca4dadcc28d59f825fd, type: 3}
+  - {fileID: 8300000, guid: 81d2fe81168d8024cb0b89571939733b, type: 3}
+  - {fileID: 8300000, guid: 07bc7bf8b100df6409d105528f36eb52, type: 3}
+  - {fileID: 8300000, guid: 5c6d8199fd993b6468c429eeedff1923, type: 3}
+  - {fileID: 8300000, guid: 365f0837de9e7d741a435cfe94635768, type: 3}
+  - {fileID: 8300000, guid: 924a19875e7d79b40b01256d54e39870, type: 3}
+  - {fileID: 8300000, guid: ace2de9147df2f047a7e3912c050aa9b, type: 3}
+  - {fileID: 8300000, guid: bdbfbba946bc0ce48bc43ffcdcb86717, type: 3}
+  - {fileID: 8300000, guid: 9629e49627cf02b4186166f5e2261dfb, type: 3}
+  - {fileID: 8300000, guid: 18f32147457daa8409d72192b0fab00b, type: 3}
+  - {fileID: 8300000, guid: af7799f17dd9398469ddbcf7f20a8acf, type: 3}
+  - {fileID: 8300000, guid: 0fcd0e41549368a4e80b70ba9574d6de, type: 3}
+  - {fileID: 8300000, guid: b37a06f7c076b524080d7c4345a5593e, type: 3}
+  musicSwitch: 1
 --- !u!1 &1903679554707010052
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,10 +276,10 @@ RectTransform:
   m_Father: {fileID: 1903679556525535435}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -50}
+  m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1903679554737381202
 CanvasRenderer:
@@ -303,6 +335,7 @@ GameObject:
   - component: {fileID: 1903679554770080438}
   - component: {fileID: 1903679554770080439}
   - component: {fileID: 1903679554770080432}
+  - component: {fileID: 3464335925389393022}
   m_Layer: 5
   m_Name: KricketuneClassics
   m_TagString: Untagged
@@ -358,7 +391,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 4ac58e659787624489dc3588df989254, type: 3}
-    m_FontSize: 25
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -372,6 +405,35 @@ MonoBehaviour:
   m_Text: 'Kricketune Classics
 
 '
+--- !u!114 &3464335925389393022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903679554770080437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a71637837066bae4cbef43bdcb3be847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radio: {fileID: 0}
+  musicClips:
+  - {fileID: 8300000, guid: 3ee1afdddd51a244595c0cd19e59dc00, type: 3}
+  - {fileID: 8300000, guid: 0f2c31ea43dae9b42a8f7b616315278e, type: 3}
+  - {fileID: 8300000, guid: a2c20e088df77514a9b27318bde4b412, type: 3}
+  - {fileID: 8300000, guid: 21f72dbb165d84c4a89fa35e19efa283, type: 3}
+  - {fileID: 8300000, guid: 8c1c2646e2ee4c54b94401a3ad2a003b, type: 3}
+  - {fileID: 8300000, guid: 848fef74ec8cf324cb9f74ad7cf2dd63, type: 3}
+  - {fileID: 8300000, guid: 823d6ce6533c4624b9c5b3da957704ab, type: 3}
+  - {fileID: 8300000, guid: 50ca44023f6e3cf4cacba07d118f0a67, type: 3}
+  - {fileID: 8300000, guid: e71df814b1287b54f9dbfce48a0e5a15, type: 3}
+  - {fileID: 8300000, guid: 263f33b664f9be64d9d5964e87dac8b6, type: 3}
+  - {fileID: 8300000, guid: 82954d99a8da20d4db4de085f6642f57, type: 3}
+  - {fileID: 8300000, guid: e91d0102e013f0b43928d0e02c5026ab, type: 3}
+  - {fileID: 8300000, guid: 9d00afca006d1cf408ea6688d2a067d1, type: 3}
+  - {fileID: 8300000, guid: 89e96a26bbd54ed4aa8e27cd6d51b101, type: 3}
+  musicSwitch: 1
 --- !u!1 &1903679554811744390
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,10 +503,10 @@ RectTransform:
   m_Father: {fileID: 1903679556525535435}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 130, y: -50}
+  m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1903679554997577791
 CanvasRenderer:
@@ -600,10 +662,10 @@ RectTransform:
   m_Father: {fileID: 1903679556525535435}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 210, y: -50}
+  m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1903679555262406508
 CanvasRenderer:
@@ -715,7 +777,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 4ac58e659787624489dc3588df989254, type: 3}
-    m_FontSize: 25
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -761,10 +823,10 @@ RectTransform:
   m_Father: {fileID: 1903679556525535435}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -110, y: -50}
+  m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1903679555647026772
 CanvasRenderer:
@@ -1166,10 +1228,10 @@ RectTransform:
   m_Father: {fileID: 1903679556525535435}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -30, y: -50}
+  m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1903679556042070296
 CanvasRenderer:
@@ -1392,7 +1454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stationBox: {fileID: 1903679556103238132}
-  melloMusic: {fileID: 0}
+  melloMusic: {fileID: 8926826285676932799}
   kricketuneClassics: {fileID: 0}
   chatotStat: {fileID: 0}
   radioArt: {fileID: 1903679556201263123}
