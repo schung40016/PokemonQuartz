@@ -16,10 +16,10 @@ public class PlayerController : MonoBehaviour, ISavable
 
     private Character character;
 
+
     private void Awake()
     {
         ////Find singleton script from unity and set instance.
-
         character = GetComponent<Character>();
     }
 
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour, ISavable
     private void CheckForHud()
     {
         //Pressing escape shows the hud.
-        if ( Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             character.Animator.IsMoving = false;
             ShowHud();

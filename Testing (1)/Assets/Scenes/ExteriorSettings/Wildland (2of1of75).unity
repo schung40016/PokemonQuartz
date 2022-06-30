@@ -790,6 +790,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EssentialObjects
       objectReference: {fileID: 0}
+    - target: {fileID: 6746656211346463511, guid: c3f9b56c53a16ed4b9310dee5497b158,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6746656212132636428, guid: c3f9b56c53a16ed4b9310dee5497b158,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -867,7 +872,7 @@ PrefabInstance:
     - target: {fileID: 7025253289496043173, guid: a79b8a47ecc207e44bfee22039aada71,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a79b8a47ecc207e44bfee22039aada71, type: 3}

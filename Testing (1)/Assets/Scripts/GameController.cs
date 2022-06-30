@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, HUD, Dialog, Cutscene, Paused }
+public enum GameState { FreeRoam, Battle, HUD, Dialog, Cutscene, Paused, Menu }
 
 public class GameController : MonoBehaviour
 {
@@ -18,11 +18,15 @@ public class GameController : MonoBehaviour
     public SceneDetails CurrentScene { get; private set; }
     public SceneDetails PrevScene { get; private set; }
 
+    MenuController menuController;
+
     public static GameController Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+
+        menuController = GetComponent<MenuController>();
 
         // Initialize Pokemon database.
         PokemonDB.Init();
@@ -51,6 +55,13 @@ public class GameController : MonoBehaviour
                 state = GameState.FreeRoam;
             }
         };
+
+        menuController.onBack += () =>
+        {
+            state = GameState.FreeRoam;
+        };
+
+        menuController.onMenuSelected += OnMenuSelected;
     }
 
     // keep the game paused while swithcing over to next scene
@@ -138,13 +149,11 @@ public class GameController : MonoBehaviour
         {
             playerController.HandleUpdate();
 
-            if (Input.GetKeyDown(KeyCode.S))
+            // Initialize game menu.
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                SavingSystem.i.Save("saveSlot1");
-            }
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                SavingSystem.i.Load("saveSlot1");
+                menuController.OpenMenu();
+                state = GameState.Menu;
             }
         }
         else if (state == GameState.Battle)
@@ -159,11 +168,38 @@ public class GameController : MonoBehaviour
         {
             DialogManager.Instance.HandleUpdate();
         }
+        else if (state == GameState.Menu)
+        {
+            menuController.HandleUpdate();
+        }
     }
 
     public void SetCurrentScene(SceneDetails currScene) 
     {
         PrevScene = CurrentScene;
         CurrentScene = currScene;
+    }
+
+    void OnMenuSelected(int selectedItem)
+    {
+        if (selectedItem == 0)
+        {
+            // Resume game.
+        }
+        else if (selectedItem == 1)
+        {
+            SavingSystem.i.Save("saveSlot1");
+        }
+        else if (selectedItem == 2)
+        {
+            SavingSystem.i.Load("saveSlot1");
+        }
+        else if (selectedItem == 3)
+        {
+            // Quit Game.
+            Application.Quit();
+        }
+
+        state = GameState.FreeRoam;
     }
 }

@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class BattleDialogueBox : MonoBehaviour
 {
-    [SerializeField] Color highlightColor;
-
     [SerializeField] int lettersPerSecond;
     [SerializeField] Text dialogText;
     [SerializeField] GameObject actionSelector;
@@ -23,6 +21,14 @@ public class BattleDialogueBox : MonoBehaviour
     [SerializeField] Text yesText;
     [SerializeField] Text noText;
 
+    Color highlightColor;
+    Color regColor;
+
+    private void Start()
+    {
+        highlightColor = GlobalSettings.i.HighlightedColor;
+        regColor = GlobalSettings.i.RegColor;
+    }
 
     public void SetDialog(string dialog)
     {
@@ -78,7 +84,7 @@ public class BattleDialogueBox : MonoBehaviour
             }    
             else
             {
-                actionTexts[i].color = Color.black;
+                actionTexts[i].color = regColor;
             }
         }
     }
@@ -94,7 +100,7 @@ public class BattleDialogueBox : MonoBehaviour
             }
             else
             {
-                moveTexts[i].color = Color.black;
+                moveTexts[i].color = regColor;
             }
         }
 
@@ -137,11 +143,11 @@ public class BattleDialogueBox : MonoBehaviour
         if(yesSelected)
         {
             yesText.color = highlightColor;
-            noText.color = Color.black;
+            noText.color = regColor;
         }
         else
         {
-            yesText.color = Color.black;
+            yesText.color = regColor;
             noText.color = highlightColor;
         }
     }

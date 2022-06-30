@@ -78,7 +78,8 @@ public class MusicQueue
     {
         foreach(AudioClip clip in tracks)
         {
-            Debug.Log(clip.length);
+            Debug.Log(tracks.Count);
+
             playFunction(clip);
 
             yield return new WaitForSeconds(clip.length + delay);
