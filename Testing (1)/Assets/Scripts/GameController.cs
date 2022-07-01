@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, HUD, Dialog, Cutscene, Paused, Menu }
+public enum GameState { FreeRoam, Battle, HUD, Dialog, Cutscene, Paused, Menu}
 
 public class GameController : MonoBehaviour
 {
@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     [SerializeField] BattleSystem battleSystem;
     [SerializeField] Camera worldCamera;
     [SerializeField] HUD hud;
+    [SerializeField] PartyScreen partyScreen;
 
     GameState state;
 
@@ -42,6 +43,7 @@ public class GameController : MonoBehaviour
         playerController.ShowHud += DisplayHud;
         hud.QuittingHud += QuitHud;
 
+        partyScreen.Init();
 
         DialogManager.Instance.OnShowDialog += () =>
         {
@@ -201,5 +203,10 @@ public class GameController : MonoBehaviour
         }
 
         state = GameState.FreeRoam;
+    }
+
+    public PlayerController GetPlayerController()
+    {
+        return playerController;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,13 @@ public class PartyScreen : MonoBehaviour
 
     //Enables us to temporarily store all pokemons from user for programing shortcut.
     List<Pokemon> pokemons;
+
+    int selection = 0;
+
+    public Pokemon SelectedMember => pokemons[selection];
+
+    // Party screen can be called from different states like ActionSelect.
+    public BattleState? CalledFrom { get; set; }
 
     //Initalizes all player's pokemon in party screen.
     public void Init()
@@ -38,7 +46,49 @@ public class PartyScreen : MonoBehaviour
             }
         }
 
+        UpdateMemberSelection(selection);
+
         messageText.text = "Choose a Pokemon";
+    }
+
+    // Handle party screen.
+    public void HandleUpdate(Action onSelected, Action onBack)
+    {
+        var prevSelection = selection;
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            ++selection;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            --selection;
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            selection += 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            selection -= 1;
+        }
+
+        selection = Mathf.Clamp(selection, 0, pokemons.Count - 1);
+
+        if (selection != prevSelection)
+        {
+            UpdateMemberSelection(selection);
+        }
+
+        // Player selects party screen.
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            onSelected?.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            onBack?.Invoke();
+        }
     }
 
     public void UpdateMemberSelection(int selectedMember)

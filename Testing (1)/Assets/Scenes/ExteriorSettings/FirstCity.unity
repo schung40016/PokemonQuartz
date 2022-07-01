@@ -43359,7 +43359,7 @@ PrefabInstance:
     - target: {fileID: 7365810491784966392, guid: 66be0929fd4516c48a071c47d284c1d5,
         type: 3}
       propertyPath: pokemons.Array.data[0].level
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7365810491784966395, guid: 66be0929fd4516c48a071c47d284c1d5,
         type: 3}

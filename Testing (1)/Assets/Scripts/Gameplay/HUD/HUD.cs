@@ -9,6 +9,7 @@ public class HUD : MonoBehaviour
 {
     [SerializeField] Image image;
     [SerializeField] TextSelector sectBox;
+    [SerializeField] GameController gameController;
     private Vector3 originalPos;
 
     //Handles audio
@@ -21,6 +22,7 @@ public class HUD : MonoBehaviour
     //Store all gameobject section types.
     [SerializeField] GameObject statSect;
     [SerializeField] GameObject radioSect;
+    [SerializeField] PartyScreen partySect;
 
     //Handles quitting the hud procedures.
     public event Action QuittingHud;
@@ -98,7 +100,20 @@ public class HUD : MonoBehaviour
         //Player selected pokemon.
         else if (currentSection == 1)
         {
-            activeSection.SetActive(false);
+            Action onSelected = () =>
+            {
+                // TODO: Add summary screen
+            };
+
+            Action onBack = () =>
+            {
+                partySect.gameObject.SetActive(false);
+            };
+
+            stationSelected(partySect.gameObject);
+            partySect.SetPartyData(gameController.GetPlayerController().GetComponent<PokemonParty>().Pokemons);
+            partySect.HandleUpdate(onSelected, onBack);
+            // state = GameState.PartyScreen;
         }
         //Player selected bag.
         else if (currentSection == 2)

@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 0.6664483, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 0.6664483, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -462,7 +462,6 @@ MonoBehaviour:
   nameText: {fileID: 735928556849892567}
   levelText: {fileID: 735928557897293254}
   hpBar: {fileID: 735928557310695756}
-  highlightedColor: {r: 0.06941971, g: 0.5401409, b: 0.9811321, a: 1}
 --- !u!1 &735928558627469039
 GameObject:
   m_ObjectHideFlags: 0

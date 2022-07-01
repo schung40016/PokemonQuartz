@@ -7,10 +7,8 @@ public class PartyMemberUI : MonoBehaviour
 {
     [SerializeField] Text nameText;
     [SerializeField] Text levelText;
+    [SerializeField] Image pokeImage;
     [SerializeField] HPBar hpBar;
-
-    //HIghlight cursor color.
-    [SerializeField] Color highlightedColor;
 
     Pokemon _pokemon;
 
@@ -29,11 +27,12 @@ public class PartyMemberUI : MonoBehaviour
     {
         if(selected)
         {
-            nameText.color = highlightedColor;
+            nameText.color = GlobalSettings.i.HighlightedColor;
+            pokeImage.sprite = _pokemon.Base.FrontSprite;
         }
         else
         {
-            nameText.color = Color.black;
+            nameText.color = GlobalSettings.i.RegColor;
         }
     }
 }
