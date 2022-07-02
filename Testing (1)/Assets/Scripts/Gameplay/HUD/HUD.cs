@@ -23,6 +23,7 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject statSect;
     [SerializeField] GameObject radioSect;
     [SerializeField] PartyScreen partySect;
+    [SerializeField] InventoryUI inventoryUI;
 
     //Handles quitting the hud procedures.
     public event Action QuittingHud;
@@ -118,7 +119,13 @@ public class HUD : MonoBehaviour
         //Player selected bag.
         else if (currentSection == 2)
         {
-            activeSection.SetActive(false);
+            Action onBack = () =>
+            {
+                inventoryUI.gameObject.SetActive(false);
+            };
+
+            stationSelected(inventoryUI.gameObject);
+            inventoryUI.HandleUpdate(onBack);
         }
         //Player selected radio.
         else if (currentSection == 3)
