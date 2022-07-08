@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Charmander
   description: Keep out of water, else it's going to die.
-  frontSprite: {fileID: 21300000, guid: e46c3d0f6bfa7cb40ac1c9fd03623ffa, type: 3}
-  backSprite: {fileID: 21300000, guid: 36dc838a1995aad489793f7229591a9a, type: 3}
+  frontSprite: {fileID: -7093902813516829123, guid: d2a12f2764203bb42a02dd62af4c0aab,
+    type: 3}
+  backSprite: {fileID: 1283797609048617086, guid: d2a12f2764203bb42a02dd62af4c0aab,
+    type: 3}
   type1: 2
   type2: 0
   maxHP: 39

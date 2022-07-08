@@ -15,8 +15,10 @@ MonoBehaviour:
   name: Bulbasaur
   description: "A strange seed was planted on its back at birth. The plant sprouts
     and grows with this Pok\xE9mon."
-  frontSprite: {fileID: 21300000, guid: c93f6e38ee86d394d8df8405ad26c735, type: 3}
-  backSprite: {fileID: 21300000, guid: 1bc6109e56ca4b546a920c777c1303c8, type: 3}
+  frontSprite: {fileID: 7004891304950770309, guid: d2a12f2764203bb42a02dd62af4c0aab,
+    type: 3}
+  backSprite: {fileID: -3050205146571178938, guid: d2a12f2764203bb42a02dd62af4c0aab,
+    type: 3}
   type1: 5
   type2: 8
   maxHP: 45

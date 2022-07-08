@@ -15,8 +15,10 @@ MonoBehaviour:
   name: Squirtle
   description: After birth, its back swells and hardens into a shell. It powerfully
     sprays foam from its mouth.
-  frontSprite: {fileID: 21300000, guid: 483c98f73866d064eab45e0738e363df, type: 3}
-  backSprite: {fileID: 21300000, guid: c5db4933ce3c1a14997272199af4ff3c, type: 3}
+  frontSprite: {fileID: 6105584857799231140, guid: d2a12f2764203bb42a02dd62af4c0aab,
+    type: 3}
+  backSprite: {fileID: -8595307368490874487, guid: d2a12f2764203bb42a02dd62af4c0aab,
+    type: 3}
   type1: 3
   type2: 0
   maxHP: 44
