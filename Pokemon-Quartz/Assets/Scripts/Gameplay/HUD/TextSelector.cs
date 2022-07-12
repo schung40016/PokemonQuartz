@@ -27,4 +27,15 @@ public class TextSelector : MonoBehaviour
             }
         }
     }
+
+    public void GreyOut(int sectNum)
+    {
+        for (int i = 0; i < sectionTexts.Count; i++)
+        {
+            if (i != sectNum)
+            {
+                sectionTexts[i].color = Color.gray;
+            }
+        }
+    }
 }

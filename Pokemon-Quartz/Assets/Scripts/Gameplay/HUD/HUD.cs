@@ -31,6 +31,9 @@ public class HUD : MonoBehaviour
     //Tracks what section the player is on right now.
     int currentSection;
 
+    // Checks whether the the pkayer wants to use an item on a mon.
+    public bool useItemOnMon = false;
+
     public GameObject activeSection;
 
     private void Awake()
@@ -78,12 +81,12 @@ public class HUD : MonoBehaviour
     //Handles section selection.
     public void sectionSelector()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.RightArrow) && !useItemOnMon)
         {
             audio.PlayOneShot(selectSound);
             ++currentSection;
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) && !useItemOnMon)
         {
             audio.PlayOneShot(selectSound);
             --currentSection;
@@ -91,7 +94,14 @@ public class HUD : MonoBehaviour
 
         currentSection = Mathf.Clamp(currentSection, 0, 4);
 
-        sectBox.UpdateSelection(currentSection);
+        if (useItemOnMon) 
+        {
+            sectBox.GreyOut(1);
+        }
+        else
+        {
+            sectBox.UpdateSelection(currentSection);
+        }
 
         //Player selected stats.
         if (currentSection == 0)
@@ -104,17 +114,31 @@ public class HUD : MonoBehaviour
             Action onSelected = () =>
             {
                 // TODO: Add summary screen
+                if (useItemOnMon)
+                {
+                    sectBox.GreyOut(1);
+                }
+                else
+                {
+
+                }
             };
 
             Action onBack = () =>
             {
+                // TODO: Tell the program whether the onBack is from regular or from inentoryUI.
+                if (useItemOnMon)
+                {
+                    inventoryUI.ClosePartyScreen();
+                    currentSection = 2;
+                    useItemOnMon = false;
+                }
+
                 partySect.gameObject.SetActive(false);
             };
 
             stationSelected(partySect.gameObject);
-            partySect.SetPartyData(gameController.GetPlayerController().GetComponent<PokemonParty>().Pokemons);
             partySect.HandleUpdate(onSelected, onBack);
-            // state = GameState.PartyScreen;
         }
         //Player selected bag.
         else if (currentSection == 2)
@@ -145,5 +169,10 @@ public class HUD : MonoBehaviour
         activeSection.SetActive(false);
         activeSection = section;
         activeSection.SetActive(true);
+    }
+
+    public void SetCurrentSelection(int value)
+    {
+        currentSection = value;
     }
 }

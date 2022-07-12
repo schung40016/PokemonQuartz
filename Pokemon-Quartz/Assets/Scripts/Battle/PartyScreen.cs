@@ -13,6 +13,8 @@ public class PartyScreen : MonoBehaviour
     //Enables us to temporarily store all pokemons from user for programing shortcut.
     List<Pokemon> pokemons;
 
+    PokemonParty party;
+
     int selection = 0;
 
     public Pokemon SelectedMember => pokemons[selection];
@@ -24,12 +26,17 @@ public class PartyScreen : MonoBehaviour
     public void Init()
     {
         memberSlots = GetComponentsInChildren<PartyMemberUI>(true);
+
+        party = PokemonParty.GetPlayerParty();
+        SetPartyData();
+
+        party.OnUpdated += SetPartyData;
     }
 
     //Data handling for all 6 (or less) pokemon.
-    public void SetPartyData(List<Pokemon> pokemons)
+    public void SetPartyData()
     {
-        this.pokemons = pokemons;
+        pokemons = party.Pokemons;
 
         //Loop through data to acquire each pokemon.
         for( int i = 0; i < memberSlots.Length; i++ )

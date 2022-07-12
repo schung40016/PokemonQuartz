@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class PokemonParty : MonoBehaviour
 {
     [SerializeField] List<Pokemon> pokemons;
+
+    public event Action OnUpdated;
 
     // Public getter to access player's pokemon list.
     public List<Pokemon> Pokemons
@@ -41,10 +44,16 @@ public class PokemonParty : MonoBehaviour
         if ( pokemons.Count < 6)
         {
             pokemons.Add(newPokemon);
+            OnUpdated?.Invoke();
         }
         else
         {
             // Will add a PC later.
         }
+    }
+
+    public static PokemonParty GetPlayerParty()
+    {
+        return FindObjectOfType<PlayerController>().GetComponent<PokemonParty>();
     }
 }
