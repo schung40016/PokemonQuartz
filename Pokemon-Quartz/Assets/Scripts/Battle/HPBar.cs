@@ -6,6 +6,8 @@ public class HPBar : MonoBehaviour
 {
     [SerializeField] GameObject health;
 
+    public bool isUpdating { get; private set; }
+
     //Adjusts hp bar based on damage or heal.
     public void SetHP( float hpNormalized )
     {
@@ -15,6 +17,8 @@ public class HPBar : MonoBehaviour
     //Animates the health bar to decrease in size.
     public IEnumerator SetHPSmooth(float newHp)
     {
+        isUpdating = true;
+
         float curHp = health.transform.localScale.x;
         float changeAmt = curHp - newHp;
 
@@ -27,5 +31,7 @@ public class HPBar : MonoBehaviour
         }
 
         health.transform.localScale = new Vector3(newHp, 1f);
+
+        isUpdating = false;
     }
 }

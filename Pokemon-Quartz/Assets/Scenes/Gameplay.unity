@@ -145,6 +145,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1799344993}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1243667086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7033574811487190813, guid: c3f9b56c53a16ed4b9310dee5497b158,
+    type: 3}
+  m_PrefabInstance: {fileID: 1799344993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1249894431 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6362815928556766489, guid: c3f9b56c53a16ed4b9310dee5497b158,
@@ -402,6 +408,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 280749780237395549, guid: c3f9b56c53a16ed4b9310dee5497b158,
+        type: 3}
+      propertyPath: pokemons.Array.data[0].level
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 280749781893767335, guid: c3f9b56c53a16ed4b9310dee5497b158,
         type: 3}
       propertyPath: m_Enabled
@@ -812,6 +823,16 @@ PrefabInstance:
       propertyPath: hud
       value: 
       objectReference: {fileID: 2084663615}
+    - target: {fileID: 6746656211067680950, guid: c3f9b56c53a16ed4b9310dee5497b158,
+        type: 3}
+      propertyPath: dialogBox
+      value: 
+      objectReference: {fileID: 1243667086}
+    - target: {fileID: 6746656211067680950, guid: c3f9b56c53a16ed4b9310dee5497b158,
+        type: 3}
+      propertyPath: dialogText
+      value: 
+      objectReference: {fileID: 1930098751}
     - target: {fileID: 6746656211346463510, guid: c3f9b56c53a16ed4b9310dee5497b158,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -880,6 +901,11 @@ PrefabInstance:
     - target: {fileID: 6746656212132636428, guid: c3f9b56c53a16ed4b9310dee5497b158,
         type: 3}
       propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7033574811487190813, guid: c3f9b56c53a16ed4b9310dee5497b158,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9213292997494593155, guid: c3f9b56c53a16ed4b9310dee5497b158,
@@ -1038,6 +1064,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb6fb2fc930dee45bda424af8197d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1930098751 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7014105036599270850, guid: c3f9b56c53a16ed4b9310dee5497b158,
+    type: 3}
+  m_PrefabInstance: {fileID: 1799344993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2084663615 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5887869748744521677, guid: c3f9b56c53a16ed4b9310dee5497b158,
@@ -1121,7 +1159,7 @@ PrefabInstance:
         type: 3}
       propertyPath: connectedScenes.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1266718992}
     - target: {fileID: 3196745700410927899, guid: 9c1be7595d15f11488ee344045c1cdad,
         type: 3}
       propertyPath: connectedScenes.Array.data[1]

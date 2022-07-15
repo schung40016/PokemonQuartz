@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pokemons:
   - _base: {fileID: 11400000, guid: 86239ff2e5eece346b592c67b1db9137, type: 2}
-    level: 7
+    level: 30
   - _base: {fileID: 11400000, guid: 1eff97ef73a0f984eb1738b6652c3cc2, type: 2}
     level: 2
   - _base: {fileID: 11400000, guid: 1eff97ef73a0f984eb1738b6652c3cc2, type: 2}

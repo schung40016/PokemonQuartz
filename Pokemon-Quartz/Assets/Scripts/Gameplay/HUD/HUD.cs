@@ -9,7 +9,7 @@ public class HUD : MonoBehaviour
 {
     [SerializeField] Image image;
     [SerializeField] TextSelector sectBox;
-    [SerializeField] GameController gameController;
+    //[SerializeField] GameController gameController;
     private Vector3 originalPos;
 
     //Handles audio
@@ -33,6 +33,7 @@ public class HUD : MonoBehaviour
 
     // Checks whether the the pkayer wants to use an item on a mon.
     public bool useItemOnMon = false;
+    private int selectedItem = 0;
 
     public GameObject activeSection;
 
@@ -41,13 +42,13 @@ public class HUD : MonoBehaviour
         //Get Image and original position of the image.
         //image = GetComponent<Image>();
         originalPos = image.transform.localPosition;
-        startAnimation();
+        StartAnimation();
 
         //Start section is always stats.
         activeSection = statSect;
     }
 
-    public void startAnimation()
+    public void StartAnimation()
     { 
         image.transform.localPosition = new Vector3(originalPos.x, 590f);       
     }
@@ -63,13 +64,13 @@ public class HUD : MonoBehaviour
         }
 
         //Allow player to select the categories.
-        sectionSelector();
+        SectionSelector();
 
-        quitHud();
+        QuitHud();
     }
 
     //Quit the HUD.
-    public void quitHud()
+    public void QuitHud()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
@@ -79,7 +80,7 @@ public class HUD : MonoBehaviour
     }
 
     //Handles section selection.
-    public void sectionSelector()
+    public void SectionSelector()
     {
         if (Input.GetKeyDown(KeyCode.RightArrow) && !useItemOnMon)
         {
@@ -106,23 +107,27 @@ public class HUD : MonoBehaviour
         //Player selected stats.
         if (currentSection == 0)
         {
-            stationSelected(statSect);
+            StationSelected(statSect);
         }
         //Player selected pokemon.
         else if (currentSection == 1)
         {
-            Action onSelected = () =>
+            Action onSelected;
+
+            if (useItemOnMon)
             {
-                // TODO: Add summary screen
-                if (useItemOnMon)
+                onSelected = () =>
                 {
                     sectBox.GreyOut(1);
-                }
-                else
+                    StartCoroutine(inventoryUI.UseItem());
+                };
+            }
+            else
+            {
+                onSelected = () =>
                 {
-
-                }
-            };
+                };
+            }
 
             Action onBack = () =>
             {
@@ -137,7 +142,7 @@ public class HUD : MonoBehaviour
                 partySect.gameObject.SetActive(false);
             };
 
-            stationSelected(partySect.gameObject);
+            StationSelected(partySect.gameObject);
             partySect.HandleUpdate(onSelected, onBack);
         }
         //Player selected bag.
@@ -148,13 +153,13 @@ public class HUD : MonoBehaviour
                 inventoryUI.gameObject.SetActive(false);
             };
 
-            stationSelected(inventoryUI.gameObject);
+            StationSelected(inventoryUI.gameObject);
             inventoryUI.HandleUpdate(onBack);
         }
         //Player selected radio.
         else if (currentSection == 3)
         {
-            stationSelected(radioSect);
+            StationSelected(radioSect);
             radioSect.GetComponent<StationSelector>().HandleUpdate();
         }
         //Player select pokedex.
@@ -164,7 +169,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    void stationSelected(GameObject section)
+    void StationSelected(GameObject section)
     {
         activeSection.SetActive(false);
         activeSection = section;
@@ -175,4 +180,5 @@ public class HUD : MonoBehaviour
     {
         currentSection = value;
     }
+
 }

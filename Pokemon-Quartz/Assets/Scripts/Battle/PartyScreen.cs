@@ -28,6 +28,9 @@ public class PartyScreen : MonoBehaviour
         memberSlots = GetComponentsInChildren<PartyMemberUI>(true);
 
         party = PokemonParty.GetPlayerParty();
+        
+        // NOTE: Program believes SetPartyData() has empty mons.
+        
         SetPartyData();
 
         party.OnUpdated += SetPartyData;
@@ -44,7 +47,7 @@ public class PartyScreen : MonoBehaviour
             if( i < pokemons.Count )
             {
                 memberSlots[i].gameObject.SetActive(true);
-                memberSlots[i].SetData(pokemons[i]);
+                memberSlots[i].Init(pokemons[i]);
             }
             //Pokemon does not exist (player has less than 6 pokemons).
             else

@@ -7,7 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum BattleState { Start, ActionSelection, MoveSelection, RunningTurn, Busy, PartyScreen, AboutToUse, MoveToForget, BattleOver }
+public enum BattleState { Start, ActionSelection, MoveSelection, RunningTurn, Busy, PartyScreen, AboutToUse, MoveToForget, BattleOver, Bag }
 
 public enum BattleAction { Move, SwitchPokemon, UseItem, Run }
 
@@ -22,6 +22,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Image trainerImage;
     [SerializeField] GameObject pokeballSprite;
     [SerializeField] MoveSelectionUI moveSelectionUI;
+    [SerializeField] InventoryUI inventoryUI;
 
     public event Action<bool> OnBattleOver;
 
@@ -155,6 +156,11 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableActionSelector(true);
     }
 
+    void OpenBag()
+    {
+        state = BattleState.Bag; 
+        inventoryUI.gameObject.SetActive(true);
+    }
 
     // Displays player's party during battle.
     void OpenPartyScreen()
@@ -260,22 +266,20 @@ public class BattleSystem : MonoBehaviour
             }
             else if (playerAction == BattleAction.UseItem)
             {
+                // This is handled from item screen, so do nothing and skip to enemy move.
                 dialogBox.EnableActionSelector(false);
-                yield return ThrowPokeball();
             }
             else if (playerAction == BattleAction.Run)
             {
                 yield return TryToEscape();
             }
 
-            // Let enemy attack.
             var enemyMove = enemyUnit.Pokemon.GetRandomMove();
 
             // Second turn.
             yield return RunMove(enemyUnit, playerUnit, enemyMove);
             yield return RunAfterTurn(enemyUnit);
 
-            // Check if the battle is over.
             if (state == BattleState.BattleOver)
             {
                 yield break;
@@ -295,45 +299,35 @@ public class BattleSystem : MonoBehaviour
         bool canRunMove = sourceUnit.Pokemon.OnBeforeMove();
         if( !canRunMove )
         {
-            // Display condition through hud.
             yield return ShowStatusChanges(sourceUnit.Pokemon);
 
-            // Update hp after confusion.
-            yield return sourceUnit.Hud.UpdateHP(); 
+            yield return sourceUnit.Hud.WaitForHPUpdate(); 
 
-            // Pokemon cannot move.
             yield break;
         }
         // Display condition through hud.
         yield return ShowStatusChanges(sourceUnit.Pokemon);
 
-        // Reduce usage of move.
         move.PP--;
 
-        // Print out what move the user used.
         yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.name} used {move.Base.name}");
 
-        // Pokemon hit its target.
         if (CheckIfMoveHits(move, sourceUnit.Pokemon, targetUnit.Pokemon))
         {
-            // Plays attack animation.
             sourceUnit.PlayAttackAnimation();
             yield return new WaitForSeconds(1f);
 
-            // Show hit animation.
             targetUnit.PlayHitAnimation();
 
-            // Check whether status move or not.
+            // Check if status condition.
             if (move.Base.Category == MoveCategory.Status)
             {
                 yield return RunMoveEffects(move.Base.Effects, sourceUnit.Pokemon, targetUnit.Pokemon, move.Base.Target);
             }
-            // Instead attack.
             else
             {
-                // Player damages the enemy pokemon.
                 var damageDetails = targetUnit.Pokemon.TakeDamage(move, sourceUnit.Pokemon);
-                yield return targetUnit.Hud.UpdateHP();   //Decrease health bar.
+                yield return targetUnit.Hud.WaitForHPUpdate();
                 yield return ShowDamageDetails(damageDetails);
             }
 
@@ -350,14 +344,11 @@ public class BattleSystem : MonoBehaviour
                 }
             }
 
-            // Check if Pokemon is dead.
             if (targetUnit.Pokemon.HP <= 0)
             {
                 yield return HandlePokemonFainted(targetUnit);
             }
-
         }
-        // Pokemon missed move.
         else
         {
             yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.name}'s missed its attack!");
@@ -407,8 +398,7 @@ public class BattleSystem : MonoBehaviour
 
         sourceUnit.Pokemon.OnAfterTurn();
         yield return ShowStatusChanges(sourceUnit.Pokemon);
-        yield return sourceUnit.Hud.UpdateHP();   // Decrease health bar.
-        // Check if Pokemon is dead after status condition.
+        yield return sourceUnit.Hud.WaitForHPUpdate();
         if (sourceUnit.Pokemon.HP <= 0)
         {
             yield return HandlePokemonFainted(sourceUnit);
@@ -600,6 +590,23 @@ public class BattleSystem : MonoBehaviour
         {
             HandlePartySelection();
         }
+        else if (state == BattleState.Bag)
+        {
+            Action onBack = () =>
+            {
+                inventoryUI.gameObject.SetActive(false);
+                state = BattleState.ActionSelection;
+            };
+
+            Action onItemUsed = () =>
+            {
+                state = BattleState.Busy;
+                inventoryUI.gameObject.SetActive(false);
+                StartCoroutine(RunTurns(BattleAction.UseItem));
+            };
+
+            inventoryUI.HandleUpdate(onBack, onItemUsed);
+        }
         else if (state == BattleState.AboutToUse)
         {
             HandleAboutToUse();
@@ -666,7 +673,7 @@ public class BattleSystem : MonoBehaviour
             // Player selected bag.
             else if(currentAction == 1)
             {
-                StartCoroutine(RunTurns(BattleAction.UseItem));
+                OpenBag();
             }
             // Player selected Pokemon.
             else if (currentAction == 2)

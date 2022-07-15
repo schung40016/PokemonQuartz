@@ -20,6 +20,8 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] HUD hud;
 
+    Action onItemUsed;
+
     Inventory inventory;
     RectTransform itemListRect;
     List<ItemSlotUI> slotUIList;
@@ -38,7 +40,9 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        UpdateItemList();   
+        UpdateItemList();
+
+        inventory.OnUpdated += UpdateItemList;
     }
 
     void UpdateItemList()
@@ -58,12 +62,13 @@ public class InventoryUI : MonoBehaviour
 
             slotUIList.Add(slotUIObj);
         }
-
         UpdateItemSelection();
     }
 
-    public void HandleUpdate(Action onBack)
+    public void HandleUpdate(Action onBack, Action onItemUsed=null)
     {
+        this.onItemUsed = onItemUsed;
+
         if (state == InventoryrUIState.ItemSelection)
         {
             int prevSelection = selectedItem;
@@ -88,29 +93,52 @@ public class InventoryUI : MonoBehaviour
             {
                 OpenPartyScreen();
             }
+            else if (Input.GetKeyDown(KeyCode.X))
+            {
+                onBack?.Invoke();
+            }
         }
         else if (state == InventoryrUIState.PartySelection)
         {
-            /*
-            Action onSelected = () =>
+            if (hud != null)
             {
-                // Use the item on the selected pokemon.
-                // Tell HUD's currentSelection to become partyScreen.
-                hud.SetCurrentSelection(1); 
-            };
-
-            Action onBackPartyScreen = () =>
+                hud.useItemOnMon = true;
+                hud.SetCurrentSelection(1);
+            }
+            else
             {
-                hud.SetCurrentSelection(2);
-                ClosePartyScreen();
-            };
+                Action onSelected = () =>
+                {
+                    // Use the item on the selected pokemon.
+                    StartCoroutine(UseItem());
+                };
 
-            partyScreen.HandleUpdate(onSelected, onBackPartyScreen);
-            */
+                Action onBackPartyScreen = () =>
+                {
+                    ClosePartyScreen();
+                };
 
-            hud.useItemOnMon = true;
-            hud.SetCurrentSelection(1);
+                partyScreen.HandleUpdate(onSelected, onBackPartyScreen);
+            }
         }
+    }
+
+    public IEnumerator UseItem()
+    {
+        state = InventoryrUIState.Busy;
+
+        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember);
+        if (usedItem != null)
+        {
+            yield return DialogManager.Instance.ShowDialogText($"The player used {usedItem.Name}.");
+            onItemUsed?.Invoke();
+        }
+        else
+        {
+            yield return DialogManager.Instance.ShowDialogText($"Nothing happened!");
+        }
+
+        ClosePartyScreen();
     }
 
     void UpdateItemSelection()
@@ -141,7 +169,8 @@ public class InventoryUI : MonoBehaviour
             return;
         }
 
-        float scrollPos = Mathf.Clamp(selectedItem - itemsInViewport/2, 0, selectedItem) * slotUIList[0].Height;
+        // Specifically the height. Since ItemUiSlot is nactive when partyscreen is on, we can't use itemUISlot[0].Height. Had to use 12. 
+        float scrollPos = Mathf.Clamp(selectedItem - itemsInViewport/2, 0, selectedItem) * 12;
         itemListRect.localPosition = new Vector2(itemListRect.localPosition.x, scrollPos);
 
         bool showUpArrow = selectedItem > itemsInViewport/2;
@@ -152,11 +181,13 @@ public class InventoryUI : MonoBehaviour
 
     void OpenPartyScreen()
     {
+        partyScreen.gameObject.SetActive(true);
         state = InventoryrUIState.PartySelection;
     }
 
     public void ClosePartyScreen()
     {
+        partyScreen.gameObject.SetActive(false);
         state = InventoryrUIState.ItemSelection;
     }
 }

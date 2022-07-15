@@ -24,6 +24,12 @@ public class BattleHud : MonoBehaviour
     // Controls lvl, pokemon name, and pokemon hp text.
     public void SetData(Pokemon pokemon)
     {
+        if (_pokemon != null)
+        {
+            _pokemon.OnHPChanged -= UpdateHP;
+            _pokemon.OnStatusChanged -= SetStatusText;
+        }
+
         _pokemon = pokemon;
 
         nameText.text = pokemon.Base.Name;
@@ -42,6 +48,7 @@ public class BattleHud : MonoBehaviour
 
         SetStatusText();
         _pokemon.OnStatusChanged += SetStatusText;
+        _pokemon.OnHPChanged += UpdateHP;
     }
 
     // Controls status text.
@@ -108,13 +115,19 @@ public class BattleHud : MonoBehaviour
         return Mathf.Clamp01(normalizedExp);
     }
 
-    // Updates pokemon's healthbar in hud.
-    public IEnumerator UpdateHP()
+    public void UpdateHP()
     {
-        if (_pokemon.HpChanged)
-        {
-            yield return hpBar.SetHPSmooth((float)_pokemon.HP / _pokemon.MaxHp);
-            _pokemon.HpChanged = false;
-        }
+        StartCoroutine(UpdateHPAsync());
+    }
+
+    // Updates pokemon's healthbar in hud.
+    public IEnumerator UpdateHPAsync()
+    {
+        yield return hpBar.SetHPSmooth((float)_pokemon.HP / _pokemon.MaxHp);
+    }
+
+    public IEnumerator WaitForHPUpdate()
+    {
+        yield return new WaitUntil(() => hpBar.isUpdating == false);
     }
 }

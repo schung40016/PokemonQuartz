@@ -13,13 +13,19 @@ public class PartyMemberUI : MonoBehaviour
     Pokemon _pokemon;
 
     //Transfers pokemon data into party screen UI.
-    public void SetData(Pokemon pokemon)
+    public void Init(Pokemon pokemon)
     {
         _pokemon = pokemon;
+        UpdateData();
 
-        nameText.text = pokemon.Base.Name;
-        levelText.text = "Lvl " + pokemon.Level;
-        hpBar.SetHP((float)pokemon.HP / pokemon.MaxHp);
+        _pokemon.OnHPChanged += UpdateData;
+    }
+
+    void UpdateData()
+    {
+        nameText.text = _pokemon.Base.Name;
+        levelText.text = "Lvl " + _pokemon.Level;
+        hpBar.SetHP((float)_pokemon.HP / _pokemon.MaxHp);
     }
 
     //Highlights user's cusor in party screen.

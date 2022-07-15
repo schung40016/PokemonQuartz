@@ -67,9 +67,8 @@ public class Pokemon
     // Display status moves that either pokemon applies to each other.
     public Queue<string> StatusChanges { get; private set; }
 
-    public bool HpChanged { get; set; }
-
     public event System.Action OnStatusChanged;
+    public event System.Action OnHPChanged;
 
     public void Init()
     {
@@ -301,17 +300,24 @@ public class Pokemon
         float d = a * move.Base.Power * ((float)attack / defense) + 2;     //Attack power and Attack stat of pokemon countered by Enemy pokemon's defense.
         int damage = Mathf.FloorToInt(d * modifiers);
 
-        UpdateHP(damage);
+        DecreaseHP(damage);
 
         //Enemy pokemon lives.
         return damageDetails;
     }
 
     //Deals damage to pokemon based on status.
-    public void UpdateHP(int damage)
+    public void IncreaseHP(int amount)
+    {
+        HP = Mathf.Clamp(HP + amount, 0, MaxHp);
+        OnHPChanged?.Invoke();
+    }
+
+    //Deals damage to pokemon based on status.
+    public void DecreaseHP(int damage)
     {
         HP = Mathf.Clamp(HP - damage, 0, MaxHp);
-        HpChanged = true;
+        OnHPChanged?.Invoke();
     }
 
     //Sets Pokemon's status.

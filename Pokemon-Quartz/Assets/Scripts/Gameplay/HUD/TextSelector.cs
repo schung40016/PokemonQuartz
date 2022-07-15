@@ -18,12 +18,12 @@ public class TextSelector : MonoBehaviour
             //Selected
             if (i == selectionAction)
             {
-                sectionTexts[i].color = highlightColor;
+                sectionTexts[i].color = GlobalSettings.i.HighlightedColor;
             }
             //Not selected
             else
             {
-                sectionTexts[i].color = Color.green;
+                sectionTexts[i].color = GlobalSettings.i.RegColor;
             }
         }
     }

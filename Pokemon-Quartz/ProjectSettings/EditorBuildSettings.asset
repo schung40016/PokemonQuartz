@@ -29,7 +29,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ExteriorSettings/Wildland (2of1of75).unity
     guid: 40f76c8de4df01540b061df22afe3c81
-  - enabled: 1
-    path: Assets/Scenes/ExteriorSettings/Wildland(2).unity
-    guid: fdd3a699de1dcdc4493ed2d01715b690
   m_configObjects: {}
