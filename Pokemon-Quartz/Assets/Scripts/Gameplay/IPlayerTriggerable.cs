@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPlayerTriggerable
 {
-    void onPLayerTriggerable(PlayerController player);
+    void onPlayerTriggerable(PlayerController player);
 }

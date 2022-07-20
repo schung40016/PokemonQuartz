@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TrainerFov : MonoBehaviour, IPlayerTriggerable
 {
-    public void onPLayerTriggerable(PlayerController player)
+    public void onPlayerTriggerable(PlayerController player)
     {
         player.Character.Animator.IsMoving = false;
         GameController.Instance.OnEntersTrainerView(GetComponentInParent<TrainerController>());

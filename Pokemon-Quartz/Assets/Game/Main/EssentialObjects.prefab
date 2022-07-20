@@ -484,7 +484,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &5004456094485167157
 MonoBehaviour:
@@ -687,6 +687,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6746656211346463510}
     m_Modifications:
+    - target: {fileID: 442726412772589477, guid: ee44577718c397e478fd7f26677e93a5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1451906822947458264, guid: ee44577718c397e478fd7f26677e93a5,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -706,6 +711,11 @@ PrefabInstance:
         type: 3}
       propertyPath: hud
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6643593060938550261, guid: ee44577718c397e478fd7f26677e93a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7210962756870771073, guid: ee44577718c397e478fd7f26677e93a5,
         type: 3}
@@ -1043,6 +1053,11 @@ PrefabInstance:
     - target: {fileID: 1903679555749407448, guid: 9c7118d68b764c04380cb325e2206f2a,
         type: 3}
       propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903679555749407455, guid: 9c7118d68b764c04380cb325e2206f2a,
+        type: 3}
+      propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1903679555749407457, guid: 9c7118d68b764c04380cb325e2206f2a,

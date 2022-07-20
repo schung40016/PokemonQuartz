@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 3196745700410927898}
   - component: {fileID: 3196745700410927901}
   - component: {fileID: 3196745700410927899}
+  - component: {fileID: 5504523614795945425}
   m_Layer: 0
-  m_Name: HomeTown
+  m_Name: SceneTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,3 +71,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb6fb2fc930dee45bda424af8197d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connectedScenes: []
+--- !u!114 &5504523614795945425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3196745700410927900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef04fe7e9af636543b0fe48c220e8185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildPokemons: []

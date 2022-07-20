@@ -26,12 +26,16 @@ public class PokemonParty : MonoBehaviour
     }
 
     // Initializes all pokemon in player party for battle.
-    private void Start()
+    private void Awake()
     {
         foreach (var pokemon in pokemons)
         {
             pokemon.Init();
         }
+    }
+
+    private void Start()
+    {
     }
 
     // At start of battle, get non fainted pokemon.

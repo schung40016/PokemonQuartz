@@ -43,7 +43,7 @@ public class StationPlaylist : MonoBehaviour
         {
             musicQueue.musicSwitch = false;
             StopCoroutine(musicLoop);
-            StopAllCoroutines();
+            //StopAllCoroutines();
             radio.Stop();
         }
     }
@@ -78,8 +78,6 @@ public class MusicQueue
     {
         foreach(AudioClip clip in tracks)
         {
-            Debug.Log(tracks.Count);
-
             playFunction(clip);
 
             yield return new WaitForSeconds(clip.length + delay);

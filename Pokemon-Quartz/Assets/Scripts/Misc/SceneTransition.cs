@@ -19,6 +19,7 @@ public class SceneTransition : MonoBehaviour
         if (timeElaspsed > delayBeforeLoading)
         {
             StartCoroutine(LoadScene());
+            Debug.Log("hello");
         }
         else if (Input.anyKeyDown)
         {

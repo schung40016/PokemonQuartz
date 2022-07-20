@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LongGrass : MonoBehaviour, IPlayerTriggerable
 {
-    public void onPLayerTriggerable(PlayerController player)
+    public void onPlayerTriggerable(PlayerController player)
     {
         if (UnityEngine.Random.Range(1, 101) <= 20)
         {

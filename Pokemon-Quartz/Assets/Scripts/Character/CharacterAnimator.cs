@@ -73,7 +73,7 @@ public class CharacterAnimator : MonoBehaviour
         }
         else
         {
-            spriteRenderer.sprite = currentAnim.Frames[0];
+            //spriteRenderer.sprite = currentAnim.Frames[0];
         }
 
         wasPreviouslyMoving = IsMoving;

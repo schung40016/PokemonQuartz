@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour, ISavable
             var triggerable = collider.GetComponent<IPlayerTriggerable>();
             if (triggerable != null) 
             {
-                triggerable.onPLayerTriggerable(this);
+                triggerable.onPlayerTriggerable(this);
                 break;
             }
         }

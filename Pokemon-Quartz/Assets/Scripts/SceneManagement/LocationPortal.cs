@@ -12,11 +12,12 @@ public class LocationPortal : MonoBehaviour, IPlayerTriggerable
 
     PlayerController player;
 
-    public void onPLayerTriggerable(PlayerController player)
+    public void onPlayerTriggerable(PlayerController player)
     {
         player.Character.Animator.IsMoving = false;
         this.player = player;
         StartCoroutine(Teleport());
+        Debug.Log("hi");
     }
 
     Fader fader;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum InventoryrUIState { ItemSelection, PartySelection, Busy }
+public enum InventoryUIState { ItemSelection, PartySelection, Busy }
 
 public class InventoryUI : MonoBehaviour
 {
@@ -19,16 +19,20 @@ public class InventoryUI : MonoBehaviour
 
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] HUD hud;
+    [SerializeField] GameObject scrollBar;
 
-    Action onItemUsed;
+    [SerializeField] TextSelector cateSelector;
+
+    Action<ItemBase> onItemUsed;
 
     Inventory inventory;
     RectTransform itemListRect;
     List<ItemSlotUI> slotUIList;
 
     int selectedItem = 0;
+    int selectedCategory = 0;  
 
-    InventoryrUIState state;
+    InventoryUIState state;
 
     const int itemsInViewport = 8;
 
@@ -55,7 +59,7 @@ public class InventoryUI : MonoBehaviour
 
         slotUIList = new List<ItemSlotUI>();
 
-        foreach (var itemSlot in inventory.Slots)
+        foreach (var itemSlot in inventory.GetSlotsByCategory(selectedCategory))
         {
             var slotUIObj = Instantiate(itemSlotUI, itemList.transform);
             slotUIObj.SetData(itemSlot);
@@ -65,13 +69,14 @@ public class InventoryUI : MonoBehaviour
         UpdateItemSelection();
     }
 
-    public void HandleUpdate(Action onBack, Action onItemUsed=null)
+    public void HandleUpdate(Action onBack,Action<ItemBase> onItemUsed=null)
     {
         this.onItemUsed = onItemUsed;
 
-        if (state == InventoryrUIState.ItemSelection)
+        if (state == InventoryUIState.ItemSelection)
         {
             int prevSelection = selectedItem;
+            int prevCategory = selectedCategory;
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
@@ -81,28 +86,52 @@ public class InventoryUI : MonoBehaviour
             {
                 --selectedItem;
             }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                ++selectedCategory;
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                --selectedCategory;
+            }
 
-            selectedItem = Mathf.Clamp(selectedItem, 0, inventory.Slots.Count - 1);
+            if (selectedCategory > cateSelector.GetTextCount() - 1)
+            {
+                selectedCategory = 0;
+            }
+            else if (selectedCategory < 0)
+            {
+                selectedCategory = cateSelector.GetTextCount() - 1;
+            }
 
-            if (prevSelection != selectedItem)
+            selectedItem = Mathf.Clamp(selectedItem, 0, inventory.GetSlotsByCategory(selectedCategory).Count - 1);           
+
+            if (prevCategory != selectedCategory)
+            {
+                ResetSelection();
+                cateSelector.UpdateSelection(selectedCategory);
+                UpdateItemList();
+            }
+            else if (prevSelection != selectedItem)
             {
                 UpdateItemSelection();
             }
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                OpenPartyScreen();
+                // TODO: Currently broke when user presses pokeball in HUD.
+                ItemSelected();
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
                 onBack?.Invoke();
             }
         }
-        else if (state == InventoryrUIState.PartySelection)
+        else if (state == InventoryUIState.PartySelection)
         {
             if (hud != null)
             {
-                hud.useItemOnMon = true;
+                hud.disableHudToggle = true;
                 hud.SetCurrentSelection(1);
             }
             else
@@ -123,18 +152,37 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
+    // Resets the item UI, so that it refreshes with new category stuff.
+    void ResetSelection()
+    {
+        selectedItem = 0;
+        upArrow.gameObject.SetActive(false);
+        downArrow.gameObject.SetActive(false);
+        itemIcon.sprite = null;
+        itemDesc.text = "";
+    }
+
     public IEnumerator UseItem()
     {
-        state = InventoryrUIState.Busy;
+        state = InventoryUIState.Busy;
 
-        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember);
+        // Calling regular waitforseconds(1f) works but not dialogmanager.
+
+        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
+
         if (usedItem != null)
         {
-            yield return DialogManager.Instance.ShowDialogText($"The player used {usedItem.Name}.");
-            onItemUsed?.Invoke();
+            if (!(usedItem is PokeballItem))
+            {
+                Debug.Log("hi");
+                yield return DialogManager.Instance.ShowDialogText($"The player used {usedItem.Name}.");
+            }
+
+            onItemUsed?.Invoke(usedItem);
         }
         else
         {
+            Debug.Log("hi");
             yield return DialogManager.Instance.ShowDialogText($"Nothing happened!");
         }
 
@@ -143,6 +191,12 @@ public class InventoryUI : MonoBehaviour
 
     void UpdateItemSelection()
     {
+        var slots = inventory.GetSlotsByCategory(selectedCategory);
+
+        scrollBar.SetActive(true);
+
+        selectedItem = Mathf.Clamp(selectedItem, 0, slots.Count - 1);
+
         for (int i = 0; i < slotUIList.Count; i++)
         {
             if (i == selectedItem)
@@ -155,9 +209,12 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        var item = inventory.Slots[selectedItem].Item;
-        itemIcon.sprite = item.Icon;
-        itemDesc.text = item.Description;
+        if (slots.Count > 0)
+        {
+            var item = slots[selectedItem].Item;
+            itemIcon.sprite = item.Icon;
+            itemDesc.text = item.Description;
+        }
 
         HandleScrolling();
     }
@@ -182,12 +239,24 @@ public class InventoryUI : MonoBehaviour
     void OpenPartyScreen()
     {
         partyScreen.gameObject.SetActive(true);
-        state = InventoryrUIState.PartySelection;
+        state = InventoryUIState.PartySelection;
     }
 
     public void ClosePartyScreen()
     {
         partyScreen.gameObject.SetActive(false);
-        state = InventoryrUIState.ItemSelection;
+        state = InventoryUIState.ItemSelection;
+    }
+
+    void ItemSelected()
+    {
+        if (selectedCategory == (int)ItemCategory.PokeBalls)
+        {
+            StartCoroutine(UseItem());
+        }
+        else
+        {
+            OpenPartyScreen();
+        }
     }
 }

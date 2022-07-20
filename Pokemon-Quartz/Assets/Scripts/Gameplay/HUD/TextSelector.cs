@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class TextSelector : MonoBehaviour
 {
     [SerializeField] Color highlightColor;
-    [SerializeField] GameObject sectionSelector;
     [SerializeField] List<Text> sectionTexts;
 
     //Indicates what action the player wants by turning words blue.
@@ -36,6 +35,15 @@ public class TextSelector : MonoBehaviour
             {
                 sectionTexts[i].color = Color.gray;
             }
+            else
+            {
+                sectionTexts[i].color = GlobalSettings.i.HighlightedColor;
+            }
         }
+    }
+
+    public int GetTextCount()
+    {
+        return sectionTexts.Count;
     }
 }

@@ -93,7 +93,9 @@ public class DialogManager : MonoBehaviour
         foreach (var letter in line.ToCharArray())
         {
             dialogText.text += letter;
-            yield return new WaitForSeconds(1f / lettersPerSecond);
+            Debug.Log((1f / lettersPerSecond));
+            yield return new WaitForSeconds(1f / lettersPerSecond);             // Does not end for some reason!!!
+            Debug.Log(line);
         }
 
         isTyping = false;

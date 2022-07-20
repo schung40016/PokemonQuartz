@@ -24,6 +24,7 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject radioSect;
     [SerializeField] PartyScreen partySect;
     [SerializeField] InventoryUI inventoryUI;
+    [SerializeField] GameObject text;
 
     //Handles quitting the hud procedures.
     public event Action QuittingHud;
@@ -32,7 +33,8 @@ public class HUD : MonoBehaviour
     int currentSection;
 
     // Checks whether the the pkayer wants to use an item on a mon.
-    public bool useItemOnMon = false;
+    public bool disableHudToggle = false;
+    int enableSelection = 0;
     private int selectedItem = 0;
 
     public GameObject activeSection;
@@ -49,8 +51,8 @@ public class HUD : MonoBehaviour
     }
 
     public void StartAnimation()
-    { 
-        image.transform.localPosition = new Vector3(originalPos.x, 590f);       
+    {
+        image.transform.localPosition = new Vector3(originalPos.x, 590f);
     }
 
     // Update is called once per frame
@@ -60,7 +62,7 @@ public class HUD : MonoBehaviour
         if (audioSwitch)
         {
             audio.PlayOneShot(openMenu);
-            audioSwitch = false;    
+            audioSwitch = false;
         }
 
         //Allow player to select the categories.
@@ -72,7 +74,7 @@ public class HUD : MonoBehaviour
     //Quit the HUD.
     public void QuitHud()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             image.transform.DOLocalMoveY(590f, 1f); // Og: 590f.
             QuittingHud();
@@ -82,12 +84,12 @@ public class HUD : MonoBehaviour
     //Handles section selection.
     public void SectionSelector()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow) && !useItemOnMon)
+        if (Input.GetKeyDown(KeyCode.RightArrow) && !disableHudToggle)
         {
             audio.PlayOneShot(selectSound);
             ++currentSection;
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) && !useItemOnMon)
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) && !disableHudToggle)
         {
             audio.PlayOneShot(selectSound);
             --currentSection;
@@ -95,13 +97,10 @@ public class HUD : MonoBehaviour
 
         currentSection = Mathf.Clamp(currentSection, 0, 4);
 
-        if (useItemOnMon) 
-        {
-            sectBox.GreyOut(1);
-        }
-        else
+        if (!disableHudToggle)
         {
             sectBox.UpdateSelection(currentSection);
+            //sectBox.GreyOut(enableSelection);
         }
 
         //Player selected stats.
@@ -114,16 +113,19 @@ public class HUD : MonoBehaviour
         {
             Action onSelected;
 
-            if (useItemOnMon)
+            if (disableHudToggle)
             {
+                EnableSection(1);
+
+                // Player came from the bag section.
                 onSelected = () =>
                 {
-                    sectBox.GreyOut(1);
                     StartCoroutine(inventoryUI.UseItem());
                 };
             }
             else
             {
+                // Open Pokemon summary.
                 onSelected = () =>
                 {
                 };
@@ -131,14 +133,13 @@ public class HUD : MonoBehaviour
 
             Action onBack = () =>
             {
-                // TODO: Tell the program whether the onBack is from regular or from inentoryUI.
-                if (useItemOnMon)
+                // TODO: Tell the program whether the onBack is from regular or from inventoryUI.
+                if (disableHudToggle)
                 {
                     inventoryUI.ClosePartyScreen();
                     currentSection = 2;
-                    useItemOnMon = false;
+                    disableHudToggle = false;
                 }
-
                 partySect.gameObject.SetActive(false);
             };
 
@@ -148,12 +149,21 @@ public class HUD : MonoBehaviour
         //Player selected bag.
         else if (currentSection == 2)
         {
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                // Allows player to traverse to other sections within items.
+                disableHudToggle = true;
+                EnableSection(2);
+            }
+
             Action onBack = () =>
             {
                 inventoryUI.gameObject.SetActive(false);
+                disableHudToggle = false;
             };
 
             StationSelected(inventoryUI.gameObject);
+
             inventoryUI.HandleUpdate(onBack);
         }
         //Player selected radio.
@@ -171,9 +181,12 @@ public class HUD : MonoBehaviour
 
     void StationSelected(GameObject section)
     {
-        activeSection.SetActive(false);
-        activeSection = section;
-        activeSection.SetActive(true);
+        if (activeSection != section)
+        {
+            activeSection.SetActive(false);
+            activeSection = section;
+            activeSection.SetActive(true);
+        }
     }
 
     public void SetCurrentSelection(int value)
@@ -181,4 +194,10 @@ public class HUD : MonoBehaviour
         currentSection = value;
     }
 
+    public void EnableSection(int sect)
+    {
+        enableSelection = sect;
+        sectBox.GreyOut(enableSelection);
+    }
 }
+
