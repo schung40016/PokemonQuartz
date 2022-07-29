@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum InventoryUIState { ItemSelection, PartySelection, Busy }
+public enum InventoryUIState { ItemSelection, PartySelection, Busy, MoveToForget }
 
 public class InventoryUI : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] HUD hud;
     [SerializeField] GameObject scrollBar;
+    [SerializeField] MoveSelectionUI moveSelectionUI;
 
     [SerializeField] TextSelector cateSelector;
 
@@ -30,11 +32,17 @@ public class InventoryUI : MonoBehaviour
     List<ItemSlotUI> slotUIList;
 
     int selectedItem = 0;
-    int selectedCategory = 0;  
+    int selectedCategory = 0;
+    MoveBase moveToLearn;
 
     InventoryUIState state;
 
     const int itemsInViewport = 8;
+
+    public InventoryUIState GetInventoryState()
+    {
+        return state;
+    }
 
     private void Awake()
     {
@@ -119,8 +127,7 @@ public class InventoryUI : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                // TODO: Currently broke when user presses pokeball in HUD.
-                ItemSelected();
+                StartCoroutine(ItemSelected());
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
@@ -150,6 +157,15 @@ public class InventoryUI : MonoBehaviour
                 partyScreen.HandleUpdate(onSelected, onBackPartyScreen);
             }
         }
+        else if (state == InventoryUIState.MoveToForget)
+        {
+            Action<int> onMoveSelected = (int moveIndex) =>
+            {
+                StartCoroutine(OnMoveToForgetSelected(moveIndex));
+            };
+
+            moveSelectionUI.HandleMoveSelection(onMoveSelected);
+        }
     }
 
     // Resets the item UI, so that it refreshes with new category stuff.
@@ -166,27 +182,80 @@ public class InventoryUI : MonoBehaviour
     {
         state = InventoryUIState.Busy;
 
-        // Calling regular waitforseconds(1f) works but not dialogmanager.
+        yield return HandleTmItems();
 
         var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
 
+        Debug.Log(usedItem != null);
+
         if (usedItem != null)
         {
-            if (!(usedItem is PokeballItem))
+            if (usedItem is RecoveryItem)
             {
-                Debug.Log("hi");
                 yield return DialogManager.Instance.ShowDialogText($"The player used {usedItem.Name}.");
             }
 
             onItemUsed?.Invoke(usedItem);
         }
         else
-        {
-            Debug.Log("hi");
-            yield return DialogManager.Instance.ShowDialogText($"Nothing happened!");
+        {   
+            if (selectedCategory == (int)ItemCategory.Items)
+            {
+                yield return DialogManager.Instance.ShowDialogText($"Nothing happened!");
+            }
         }
 
         ClosePartyScreen();
+    }
+
+    IEnumerator HandleTmItems()
+    {
+        var tmItem = inventory.GetItem(selectedItem, selectedCategory) as TmItem;
+        
+        if (tmItem == null)
+        {
+            yield break;
+        }
+
+        var pokemon = partyScreen.SelectedMember;
+
+        if (pokemon.HasMove(tmItem.Move))
+        {
+            // BUG: TM still gets removed when pokemon already has move.
+            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} already knows {tmItem.Move.Name}.");
+            yield break;
+        }
+
+        if (tmItem.CanBeTaught(pokemon))
+        {
+            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} can't learn {tmItem.Move.Name}.");
+            yield break;
+        }
+
+        if (pokemon.Moves.Count < PokemonBase.MaximumNumOfMoves)
+        {
+            pokemon.LearnMove(tmItem.Move);
+            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} learned {tmItem.Move.Name}.");
+        }
+        else
+        {
+            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} is trying to learn {tmItem.Move.Name}.");
+            yield return DialogManager.Instance.ShowDialogText($"But it cannot learn more than {PokemonBase.MaximumNumOfMoves} moves.");
+            yield return ChooseMoveToForget(pokemon, tmItem.Move);
+            yield return new WaitUntil(() => state != InventoryUIState.MoveToForget);
+        }
+    }
+
+    // Handles the move selection ui menu.
+    IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)
+    {
+        state = InventoryUIState.MoveToForget;
+        yield return DialogManager.Instance.ShowDialogText($"Choose a move you wish to forget", true, false);
+        moveSelectionUI.gameObject.SetActive(true);
+        moveSelectionUI.SetMoveData(pokemon.Moves.Select(x => x.Base).ToList(), newMove);
+        moveToLearn = newMove;
+
+        state = InventoryUIState.MoveToForget;
     }
 
     void UpdateItemSelection()
@@ -246,10 +315,40 @@ public class InventoryUI : MonoBehaviour
     {
         partyScreen.gameObject.SetActive(false);
         state = InventoryUIState.ItemSelection;
+
+        partyScreen.CLearMemberSlotMessages();
+
+        hud.SetCurrentSelection(2);
+        hud.disableHudToggle = false;
     }
 
-    void ItemSelected()
+    IEnumerator ItemSelected()
     {
+        state = InventoryUIState.Busy;
+
+        var item = inventory.GetItem(selectedItem, selectedCategory);
+
+        if (GameController.Instance.State == GameState.Battle)
+        {
+            // In Battle.
+            if (!item.CanUseInBattle)
+            {
+                yield return DialogManager.Instance.ShowDialogText($"This item cannot be used in battle!");
+                state = InventoryUIState.ItemSelection;
+                yield break;
+            }
+        }
+        else
+        {
+            // Outside battle.
+            if (!item.CanUseOutsideBattle)
+            {
+                yield return DialogManager.Instance.ShowDialogText($"This item cannot be used outside battle!");
+                state = InventoryUIState.ItemSelection;
+                yield break;
+            }
+        }
+
         if (selectedCategory == (int)ItemCategory.PokeBalls)
         {
             StartCoroutine(UseItem());
@@ -257,6 +356,40 @@ public class InventoryUI : MonoBehaviour
         else
         {
             OpenPartyScreen();
+
+            if(item is TmItem)
+            {
+                // Show if the TM is usable.
+                partyScreen.ShowIfTmIsUsable(item as TmItem);
+            }
         }
+    }
+
+    IEnumerator OnMoveToForgetSelected(int moveIndex)
+    {
+        var pokemon = partyScreen.SelectedMember;
+
+        DialogManager.Instance.CloseDialog();
+
+        moveSelectionUI.gameObject.SetActive(false);
+
+        // Player does't want to learn the new move.
+        if (moveIndex == PokemonBase.MaximumNumOfMoves)
+        {
+            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.name} did not learn {moveToLearn.Name}");
+        }
+        // Pokemon forget and learn a new move.
+        else
+        {
+            var selectedMove = pokemon.Moves[moveIndex].Base;
+            Debug.Log(pokemon.Base.Name);
+            Debug.Log(selectedMove.Name);
+            Debug.Log(moveToLearn.Name);
+            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.name} forgot {selectedMove.Name} and learned {moveToLearn.Name}");
+            pokemon.Moves[moveIndex] = new Move(moveToLearn);
+        }
+
+        moveToLearn = null;
+        state = InventoryUIState.ItemSelection;
     }
 }

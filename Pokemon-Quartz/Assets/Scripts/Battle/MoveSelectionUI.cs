@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class MoveSelectionUI : MonoBehaviour
 {
     [SerializeField] List<Text> moveTexts;
-    [SerializeField] Color highlightColor;
 
     int currentSelection = 0;
 
@@ -51,11 +50,11 @@ public class MoveSelectionUI : MonoBehaviour
         {
             if (i == selection)
             {
-                moveTexts[i].color = highlightColor;
+                moveTexts[i].color = GlobalSettings.i.HighlightedColor;
             }
             else
             {
-                moveTexts[i].color = Color.black;
+                moveTexts[i].color = GlobalSettings.i.RegColor;
             }
         }
     }

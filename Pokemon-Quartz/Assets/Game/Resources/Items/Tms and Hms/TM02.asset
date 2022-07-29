@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aaf07aa318109145a3b1f83ac03fe63, type: 3}
+  m_Name: TM02
+  m_EditorClassIdentifier: 
+  name: TM02
+  description: '"When it''s too dangerous to attack, sing!" - Dis-Co.'
+  icon: {fileID: -8367146129762343941, guid: 0c50d42e15925d64da665aa57cfadb49, type: 3}
+  move: {fileID: 11400000, guid: 16e0ee5b4197a234b988095808d098a2, type: 2}

@@ -1703,6 +1703,7 @@ MonoBehaviour:
   partyScreen: {fileID: 0}
   hud: {fileID: 0}
   scrollBar: {fileID: 5389666840217492571}
+  moveSelectionUI: {fileID: 0}
   cateSelector: {fileID: 5756723444775697258}
 --- !u!1 &5000334771547083747
 GameObject:
@@ -2060,7 +2061,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5105232149267489756}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0
+  m_Size: 0.8937149
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

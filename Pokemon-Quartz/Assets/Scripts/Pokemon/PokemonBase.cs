@@ -34,8 +34,11 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int catchRate = 255;
 
     [SerializeField] List<LearnableMove> learnableMoves;
+    [SerializeField] List<MoveBase> learnableByItems; 
 
     public static int MaximumNumOfMoves { get; set; } = 4;
+
+    public List<MoveBase> LearnableByItems => learnableByItems;
 
     public int GetExpForLevel(int level)
     {

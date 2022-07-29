@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: Nova Cluster
   m_EditorClassIdentifier: 
   name: Nova Cluster
-  description: Sling a volley of black holes at your target
+  description: Sling a volley of black holes at your target!!!
   type: 11
   power: 120
   accuracy: 80
+  alwaysHits: 0
   pp: 5
+  priority: 0
   category: 1
   effects:
     boosts: []
+    status: 0
+    volatileStatus: 0
+  secondaries: []
   target: 0

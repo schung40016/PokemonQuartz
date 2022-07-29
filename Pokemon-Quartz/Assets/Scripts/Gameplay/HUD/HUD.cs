@@ -24,6 +24,7 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject radioSect;
     [SerializeField] PartyScreen partySect;
     [SerializeField] InventoryUI inventoryUI;
+    [SerializeField] GameObject bag;
     [SerializeField] GameObject text;
 
     //Handles quitting the hud procedures.
@@ -74,7 +75,7 @@ public class HUD : MonoBehaviour
     //Quit the HUD.
     public void QuitHud()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && (inventoryUI.GetInventoryState() != InventoryUIState.Busy || inventoryUI.GetInventoryState() != InventoryUIState.MoveToForget))
         {
             image.transform.DOLocalMoveY(590f, 1f); // Og: 590f.
             QuittingHud();
@@ -113,7 +114,7 @@ public class HUD : MonoBehaviour
         {
             Action onSelected;
 
-            if (disableHudToggle)
+            if (disableHudToggle && (inventoryUI.GetInventoryState() != InventoryUIState.Busy && inventoryUI.GetInventoryState() != InventoryUIState.MoveToForget))
             {
                 EnableSection(1);
 
@@ -144,7 +145,14 @@ public class HUD : MonoBehaviour
             };
 
             StationSelected(partySect.gameObject);
-            partySect.HandleUpdate(onSelected, onBack);
+            if (inventoryUI.GetInventoryState() == InventoryUIState.MoveToForget)
+            {
+                inventoryUI.HandleUpdate(null);
+            }
+            else
+            {
+                partySect.HandleUpdate(onSelected, onBack);
+            }
         }
         //Player selected bag.
         else if (currentSection == 2)
@@ -158,11 +166,12 @@ public class HUD : MonoBehaviour
 
             Action onBack = () =>
             {
-                inventoryUI.gameObject.SetActive(false);
+                //inventoryUI.gameObject
+                bag.SetActive(false);
                 disableHudToggle = false;
             };
 
-            StationSelected(inventoryUI.gameObject);
+            StationSelected(bag.gameObject); // inventoryUI.gameObject
 
             inventoryUI.HandleUpdate(onBack);
         }

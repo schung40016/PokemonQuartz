@@ -20,15 +20,9 @@ public class DialogManager : MonoBehaviour
         Instance = this;
     }
 
-    Dialog dialog;
-    Action onDialogFinished;
-    
-    int currentLine = 0;
-    bool isTyping;
-
     public bool IsShowing { get; private set; }
 
-    public IEnumerator ShowDialogText(string text, bool waitForInput = true)
+    public IEnumerator ShowDialogText(string text, bool waitForInput = true, bool autoClose = true)
     {
         IsShowing = true;
         dialogBox.SetActive(true);
@@ -40,11 +34,19 @@ public class DialogManager : MonoBehaviour
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Z));
         }
 
+        if (autoClose)
+        {
+            CloseDialog();
+        }
+    }
+
+    public void CloseDialog()
+    {
         dialogBox.SetActive(false);
         IsShowing = false;
     }
 
-    public IEnumerator ShowDialog(Dialog dialog, Action onFinished=null)
+    public IEnumerator ShowDialog(Dialog dialog)
     {
         //Wait for frame to pass, so that we can avoid any bugs or glitches.
         yield return new WaitForEndOfFrame();
@@ -52,40 +54,27 @@ public class DialogManager : MonoBehaviour
         OnShowDialog?.Invoke();
 
         IsShowing = true;
-        this.dialog = dialog;
-        onDialogFinished = onFinished;
 
         dialogBox.SetActive(true);
-        StartCoroutine(TypeDialog(dialog.Lines[0]));
+
+        foreach (var line in dialog.Lines)
+        {
+            yield return TypeDialog(line);
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Z));
+        }
+
+        dialogBox.SetActive(false);
+        IsShowing = false;
+        OnCloseDialog?.Invoke();
     }
 
     public void HandleUpdate()
     {
-        if ( Input.GetKeyDown(KeyCode.Z) && !isTyping)
-        {
-            ++currentLine;
-            //Start/continue dialogue.
-            if( currentLine < dialog.Lines.Count)
-            {
-                StartCoroutine(TypeDialog(dialog.Lines[currentLine]));
-            }
-            //End dialog.
-            else
-            {
-                currentLine = 0;
-                IsShowing = false;
-                dialogBox.SetActive(false);
-
-                onDialogFinished?.Invoke();
-                OnCloseDialog?.Invoke();
-            }
-        }
+        
     }
 
     public IEnumerator TypeDialog(string line)
     {
-        isTyping = true;
-
         //To begin animation we want to start with no letters. Then add as we animate.
         dialogText.text = "";
 
@@ -93,11 +82,7 @@ public class DialogManager : MonoBehaviour
         foreach (var letter in line.ToCharArray())
         {
             dialogText.text += letter;
-            Debug.Log((1f / lettersPerSecond));
             yield return new WaitForSeconds(1f / lettersPerSecond);             // Does not end for some reason!!!
-            Debug.Log(line);
         }
-
-        isTyping = false;
     }
 }
