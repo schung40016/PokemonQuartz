@@ -24,7 +24,9 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject radioSect;
     [SerializeField] PartyScreen partySect;
     [SerializeField] InventoryUI inventoryUI;
-    [SerializeField] GameObject bag;
+    [SerializeField] GameObject bagSect;
+    [SerializeField] GameObject questSect;
+    [SerializeField] GameObject dexSect;
     [SerializeField] GameObject text;
 
     //Handles quitting the hud procedures.
@@ -96,12 +98,11 @@ public class HUD : MonoBehaviour
             --currentSection;
         }
 
-        currentSection = Mathf.Clamp(currentSection, 0, 4);
+        currentSection = Mathf.Clamp(currentSection, 0, 5);
 
         if (!disableHudToggle)
         {
             sectBox.UpdateSelection(currentSection);
-            //sectBox.GreyOut(enableSelection);
         }
 
         //Player selected stats.
@@ -166,25 +167,28 @@ public class HUD : MonoBehaviour
 
             Action onBack = () =>
             {
-                //inventoryUI.gameObject
-                bag.SetActive(false);
+                bagSect.SetActive(false);
                 disableHudToggle = false;
             };
 
-            StationSelected(bag.gameObject); // inventoryUI.gameObject
+            StationSelected(bagSect.gameObject); 
 
             inventoryUI.HandleUpdate(onBack);
         }
-        //Player selected radio.
         else if (currentSection == 3)
+        {
+            StationSelected(questSect);
+        }
+        //Player selected radio.
+        else if (currentSection == 4)
         {
             StationSelected(radioSect);
             radioSect.GetComponent<StationSelector>().HandleUpdate();
         }
         //Player select pokedex.
-        else if (currentSection == 4)
+        else if (currentSection == 5)
         {
-            activeSection.SetActive(false);
+            StationSelected(dexSect);
         }
     }
 

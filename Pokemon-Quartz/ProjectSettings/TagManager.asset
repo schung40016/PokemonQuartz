@@ -19,7 +19,7 @@ TagManager:
   - Player
   - Fov
   - Portal
-  - 
+  - Triggers
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Floor
     uniqueID: 631784165
+    locked: 0
+  - name: Interactable
+    uniqueID: 4064766191
     locked: 0
   - name: Player
     uniqueID: 3756351

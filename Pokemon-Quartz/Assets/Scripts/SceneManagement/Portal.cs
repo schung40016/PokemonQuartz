@@ -12,6 +12,8 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
 
     PlayerController player;
 
+    public bool TriggerRepeatedly => false;
+
     public void onPlayerTriggerable(PlayerController player)
     {
         player.Character.Animator.IsMoving = false;
@@ -44,7 +46,6 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
     }
 
     public Transform SpawnPoint => spawnPoint;
-
 }
 
 public enum DestinationIdentifier { A, B, C, D, E }

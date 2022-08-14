@@ -51,6 +51,7 @@ MonoBehaviour:
   battleSystem: {fileID: 0}
   worldCamera: {fileID: 0}
   hud: {fileID: 0}
+  partyScreen: {fileID: 0}
 --- !u!114 &8029550545256813961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,7 +96,10 @@ MonoBehaviour:
     m_Bits: 4096
   portalLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8192
+  triggersLayer:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!114 &881548739645523481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,3 +125,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 0}
+  column: {fileID: 0}
