@@ -44,3 +44,4 @@ MonoBehaviour:
   learnableByItems:
   - {fileID: 11400000, guid: a6e843c419d12964abe21927fda787ac, type: 2}
   - {fileID: 11400000, guid: a3b76fc3dc0527f41aa32384422d98cf, type: 2}
+  evolutions: []

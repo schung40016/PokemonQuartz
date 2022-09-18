@@ -18,6 +18,7 @@ public class MenuController : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("hello");
         menuItems = column.GetComponentsInChildren<Text>().ToList();
     }
 

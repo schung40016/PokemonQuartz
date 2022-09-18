@@ -102,7 +102,7 @@ public class Pokemon
 
     public Pokemon(PokemonSaveData saveData)
     {
-        _base = PokemonDB.GetPokemonByName(saveData.name);
+        _base = PokemonDB.GetObjectByName(saveData.name);
         HP = saveData.hp;
         level = saveData.level;
         Exp = saveData.exp;
@@ -131,7 +131,7 @@ public class Pokemon
     {
         var saveData = new PokemonSaveData()
         {
-            name = Base.Name,
+            name = Base.name,
             hp = HP,
             level = Level,
             exp = Exp,
@@ -246,6 +246,22 @@ public class Pokemon
     public bool HasMove(MoveBase moveToCheck)
     {
         return Moves.Count(m => m.Base == moveToCheck) > 0;
+    }
+
+    public Evolution CheckForEvolution()
+    {
+        return Base.Evolutions.FirstOrDefault(e => e.RequiredLevel <= level);
+    }
+
+    public Evolution CheckForEvolution(ItemBase item)
+    {
+        return Base.Evolutions.FirstOrDefault(e => e.RequiredItem == item);
+    }
+
+    public void Evolve(Evolution evolution)
+    {
+        _base = evolution.EvolesInto;
+        CalculateStats();
     }
 
     public int Attack

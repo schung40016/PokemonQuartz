@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemCategory {  Items, PokeBalls, Tms }
+public enum ItemCategory {  healing, PokeBalls, Tms, Item, Key }
 
 public class Inventory : MonoBehaviour, ISavable
 {
     [SerializeField] List<ItemSlot> slots;
     [SerializeField] List<ItemSlot> pokeballSlots;
     [SerializeField] List<ItemSlot> tmSlots;
+    [SerializeField] List<ItemSlot> itemSlots;
+    [SerializeField] List<ItemSlot> keySlots;
 
     List<List<ItemSlot>> allSlots;
 
@@ -18,7 +20,7 @@ public class Inventory : MonoBehaviour, ISavable
 
     private void Awake()
     {
-        allSlots = new List<List<ItemSlot>> { slots, pokeballSlots, tmSlots };
+        allSlots = new List<List<ItemSlot>> { slots, pokeballSlots, tmSlots, itemSlots, keySlots };
     }
 
     public List<ItemSlot> GetSlotsByCategory(int categoryIndex)
@@ -75,15 +77,23 @@ public class Inventory : MonoBehaviour, ISavable
     {
         if (item is RecoveryItem)
         {
-            return ItemCategory.Items;
+            return ItemCategory.healing;
         }
         else if (item is PokeballItem)
         {
             return ItemCategory.PokeBalls;
         }
-        else
+        else if (item is TmItem)
         {
             return ItemCategory.Tms;
+        }
+        else if (item is EvolutionItem)
+        {
+            return ItemCategory.Item;
+        }
+        else
+        {
+            return ItemCategory.Key;
         }
     }
 
@@ -122,9 +132,11 @@ public class Inventory : MonoBehaviour, ISavable
     {
         var saveData = new InventorySaveData()
         {
-            items = slots.Select(i => i.GetSaveData()).ToList(),
+            healing = slots.Select(i => i.GetSaveData()).ToList(),
             pokeballs = pokeballSlots.Select(i => i.GetSaveData()).ToList(),
             tms = tmSlots.Select(i => i.GetSaveData()).ToList(),
+            items = tmSlots.Select(i => i.GetSaveData()).ToList(),
+            key = tmSlots.Select(i => i.GetSaveData()).ToList(),
         };
 
         return saveData;
@@ -134,11 +146,13 @@ public class Inventory : MonoBehaviour, ISavable
     {
         var saveData = state as InventorySaveData;
 
-        slots = saveData.items.Select(i => new ItemSlot(i)).ToList();
+        slots = saveData.healing.Select(i => new ItemSlot(i)).ToList();
         pokeballSlots = saveData.pokeballs.Select(i => new ItemSlot(i)).ToList();
         tmSlots = saveData.tms.Select(i => new ItemSlot(i)).ToList();
+        tmSlots = saveData.items.Select(i => new ItemSlot(i)).ToList();
+        tmSlots = saveData.key.Select(i => new ItemSlot(i)).ToList();
 
-        allSlots = new List<List<ItemSlot>> { slots, pokeballSlots, tmSlots }; 
+        allSlots = new List<List<ItemSlot>> { slots, pokeballSlots, tmSlots, itemSlots, keySlots }; 
 
         OnUpdated?.Invoke();
     }
@@ -155,9 +169,9 @@ public class ItemSlot
 
     }
 
-    public ItemSlot(ItemSaveData saveData )
+    public ItemSlot(ItemSaveData saveData)
     {
-        item = ItemDB.GetItemByName(saveData.name);
+        item = ItemDB.GetObjectByName(saveData.name);
         count = saveData.count;
     }
 
@@ -165,7 +179,7 @@ public class ItemSlot
     {
         var saveData = new ItemSaveData()
         {
-            name = item.Name,
+            name = item.name,
             count = count
         };
 
@@ -193,7 +207,9 @@ public class ItemSaveData
 [Serializable]
 public class InventorySaveData
 {
-    public List<ItemSaveData> items;
+    public List<ItemSaveData> healing;
     public List<ItemSaveData> pokeballs;
     public List<ItemSaveData> tms;
+    public List<ItemSaveData> items;
+    public List<ItemSaveData> key;
 }

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 8029550545256813966}
   - component: {fileID: 881548739645523481}
   - component: {fileID: 6341582788142731514}
+  - component: {fileID: 7503393745557695790}
+  - component: {fileID: 8003306990178984557}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -126,3 +128,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 0}
   column: {fileID: 0}
+--- !u!114 &7503393745557695790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8029550545256813962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f004c675ba2c847bbd28e4dec3055f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightedColor: {r: 1, g: 0.83413935, b: 0, a: 1}
+  regColor: {r: 1, g: 0.6664483, b: 0, a: 1}
+--- !u!114 &8003306990178984557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8029550545256813962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 887aa054310733c48848c8968aed86d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  evolutionUI: {fileID: 0}
+  pokemonImage: {fileID: 0}

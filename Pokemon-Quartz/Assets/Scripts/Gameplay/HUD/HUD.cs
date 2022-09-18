@@ -26,6 +26,7 @@ public class HUD : MonoBehaviour
     [SerializeField] InventoryUI inventoryUI;
     [SerializeField] GameObject bagSect;
     [SerializeField] GameObject questSect;
+    [SerializeField] QuestUI questUI;
     [SerializeField] GameObject dexSect;
     [SerializeField] GameObject text;
 
@@ -38,7 +39,6 @@ public class HUD : MonoBehaviour
     // Checks whether the the pkayer wants to use an item on a mon.
     public bool disableHudToggle = false;
     int enableSelection = 0;
-    private int selectedItem = 0;
 
     public GameObject activeSection;
 
@@ -155,7 +155,7 @@ public class HUD : MonoBehaviour
                 partySect.HandleUpdate(onSelected, onBack);
             }
         }
-        //Player selected bag.
+        // Player selected bag.
         else if (currentSection == 2)
         {
             if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -175,17 +175,19 @@ public class HUD : MonoBehaviour
 
             inventoryUI.HandleUpdate(onBack);
         }
+        // Player selected quest.
         else if (currentSection == 3)
         {
             StationSelected(questSect);
+            questUI.HandleUpdate();
         }
-        //Player selected radio.
+        // Player selected radio.
         else if (currentSection == 4)
         {
             StationSelected(radioSect);
             radioSect.GetComponent<StationSelector>().HandleUpdate();
         }
-        //Player select pokedex.
+        // Player select pokedex.
         else if (currentSection == 5)
         {
             StationSelected(dexSect);

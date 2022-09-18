@@ -184,9 +184,27 @@ public class InventoryUI : MonoBehaviour
 
         yield return HandleTmItems();
 
-        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
+        var item = inventory.GetItem(selectedItem, selectedCategory);
+        var pokemon = partyScreen.SelectedMember;
 
-        Debug.Log(usedItem != null);
+        // Handle Evolution.
+        if (item is EvolutionItem)
+        {
+            var evolution = pokemon.CheckForEvolution(item);
+
+            if (evolution != null)
+            {
+                yield return EvolutionManager.i.Evolve(pokemon, evolution);
+            }
+            else
+            {
+                yield return DialogManager.Instance.ShowDialogText($"Sorry, that didn't work.");
+                ClosePartyScreen();
+                yield break;
+            }
+        }
+
+        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
 
         if (usedItem != null)
         {
@@ -199,7 +217,7 @@ public class InventoryUI : MonoBehaviour
         }
         else
         {   
-            if (selectedCategory == (int)ItemCategory.Items)
+            if (selectedCategory == (int)ItemCategory.healing)
             {
                 yield return DialogManager.Instance.ShowDialogText($"Nothing happened!");
             }

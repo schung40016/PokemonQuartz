@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3008200696550179027}
   - component: {fileID: 7961588092050850096}
   - component: {fileID: 5362007631514785843}
+  - component: {fileID: -4428189059472087435}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -272,6 +273,22 @@ MonoBehaviour:
     count: 1
   - item: {fileID: 11400000, guid: db849f2358561b04f843cf9ba725e0c6, type: 2}
     count: 1
+  itemSlots:
+  - item: {fileID: 11400000, guid: 040c9c810d9a50d4299b950f4f8206a3, type: 2}
+    count: 1
+  keySlots: []
+--- !u!114 &-4428189059472087435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6793007566846000072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db816b914b1f60542b24bdd94a17867d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6793007567464250670
 GameObject:
   m_ObjectHideFlags: 0

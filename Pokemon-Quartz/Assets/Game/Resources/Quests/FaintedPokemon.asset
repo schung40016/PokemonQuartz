@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1ae97f67411ac43a6992f17016c37d, type: 3}
   m_Name: FaintedPokemon
   m_EditorClassIdentifier: 
-  name: FaintedPokemon
-  desc: 
+  name: A Helping Hand
+  desc: Looks like towns folk needs a revive. Retrieve and return a revive to him.
   startDialogue:
     lines:
     - My pokemon has fainted.

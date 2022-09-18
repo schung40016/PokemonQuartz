@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, HUD, Dialog, Cutscene, Paused, Menu}
+public enum GameState { FreeRoam, Battle, HUD, Dialog, Cutscene, Paused, Menu, Evolution}
 
 public class GameController : MonoBehaviour
 {
@@ -13,8 +13,8 @@ public class GameController : MonoBehaviour
     [SerializeField] PartyScreen partyScreen;
 
     GameState state;
-
     GameState prevState;
+    GameState stateBeforeEvolution;
 
     public SceneDetails CurrentScene { get; private set; }
     public SceneDetails PrevScene { get; private set; }
@@ -40,6 +40,7 @@ public class GameController : MonoBehaviour
         MoveDB.Init();
         ConditionsDB.Init();
         ItemDB.Init();
+        QuestDB.Init();
     }
 
     private void Start()
@@ -71,6 +72,13 @@ public class GameController : MonoBehaviour
         };
 
         menuController.onMenuSelected += OnMenuSelected;
+
+        EvolutionManager.i.OnStartEvolution += () =>
+        {
+            stateBeforeEvolution = state;
+            state = GameState.Evolution;
+        };
+        EvolutionManager.i.OnCompleteEvolution += () => state = stateBeforeEvolution;
     }
 
     // keep the game paused while swithcing over to next scene
@@ -133,6 +141,9 @@ public class GameController : MonoBehaviour
         state = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(true);
+
+       var playerParty = playerController.GetComponent<PokemonParty>();
+        StartCoroutine(playerParty.CheckForEvolutions());
     }
 
     //Displays hud.

@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68a421bbee959e9408ad901ca59b5bfb, type: 3}
-  m_Name: Charmander
+  m_Name: Charmeleon
   m_EditorClassIdentifier: 
-  name: Charmander
+  name: Charmeleon
   description: Keep out of water, else it's going to die.
-  frontSprite: {fileID: -7093902813516829123, guid: d2a12f2764203bb42a02dd62af4c0aab,
+  frontSprite: {fileID: -8654434817131309589, guid: d2a12f2764203bb42a02dd62af4c0aab,
     type: 3}
-  backSprite: {fileID: 1283797609048617086, guid: d2a12f2764203bb42a02dd62af4c0aab,
+  backSprite: {fileID: 8056723185991814083, guid: d2a12f2764203bb42a02dd62af4c0aab,
     type: 3}
   type1: 2
   type2: 0
-  maxHP: 39
-  attack: 52
-  defense: 43
-  spAttack: 60
-  spDefense: 50
-  speed: 65
-  expYield: 3000
+  maxHP: 60
+  attack: 72
+  defense: 63
+  spAttack: 80
+  spDefense: 70
+  speed: 85
+  expYield: 80
   growthRate: 2
   catchRate: 255
   learnableMoves:
@@ -44,6 +44,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a6e843c419d12964abe21927fda787ac, type: 2}
   - {fileID: 11400000, guid: a3b76fc3dc0527f41aa32384422d98cf, type: 2}
   evolutions:
-  - evolvesInto: {fileID: 11400000, guid: 764a33b15d3bc4747a0661611f05e45c, type: 2}
-    requiredLevel: 16
-    requiredItem: {fileID: 11400000, guid: 040c9c810d9a50d4299b950f4f8206a3, type: 2}
+  - evolvesInto: {fileID: 0}
+    requiredLevel: 0
