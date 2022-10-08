@@ -78,7 +78,11 @@ public class GameController : MonoBehaviour
             stateBeforeEvolution = state;
             state = GameState.Evolution;
         };
-        EvolutionManager.i.OnCompleteEvolution += () => state = stateBeforeEvolution;
+        EvolutionManager.i.OnCompleteEvolution += () =>
+        {
+            partyScreen.SetPartyData();
+            state = stateBeforeEvolution;
+        };
     }
 
     // keep the game paused while swithcing over to next scene
@@ -137,6 +141,8 @@ public class GameController : MonoBehaviour
             trainer.BattleLost();
             trainer = null;
         }
+
+        partyScreen.SetPartyData();
 
         state = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);

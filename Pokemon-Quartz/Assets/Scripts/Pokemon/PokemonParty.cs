@@ -41,7 +41,7 @@ public class PokemonParty : MonoBehaviour
     // At start of battle, get non fainted pokemon.
     public Pokemon GetHealthyPokemon()
     {
-        return pokemons.Where(x => x.HP > 0 ).FirstOrDefault();
+        return pokemons.Where(x => x.HP > 0).FirstOrDefault();
     }
 
     // Adds pokemon into party after capture.
@@ -68,6 +68,11 @@ public class PokemonParty : MonoBehaviour
                 yield return EvolutionManager.i.Evolve(pokemon, evolution);
             }
         }
+    }
+
+    public void PartyUpdated()
+    {
+        OnUpdated?.Invoke();
     }
 
     public static PokemonParty GetPlayerParty()

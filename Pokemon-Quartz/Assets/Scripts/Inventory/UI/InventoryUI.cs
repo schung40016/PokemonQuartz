@@ -298,9 +298,14 @@ public class InventoryUI : MonoBehaviour
 
         if (slots.Count > 0)
         {
+            itemIcon.color = Color.white;
             var item = slots[selectedItem].Item;
             itemIcon.sprite = item.Icon;
             itemDesc.text = item.Description;
+        }
+        else
+        {
+            itemIcon.color = Color.black;
         }
 
         HandleScrolling();

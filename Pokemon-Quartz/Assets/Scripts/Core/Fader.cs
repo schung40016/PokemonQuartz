@@ -6,10 +6,13 @@ using UnityEngine.UI;
 
 public class Fader : MonoBehaviour
 {
+    public static Fader i { get; private set; }
+
     // Fading when switching scenes
     Image image;
     private void Awake()
     {
+        i = this;
         image = GetComponent<Image>();
     }
 

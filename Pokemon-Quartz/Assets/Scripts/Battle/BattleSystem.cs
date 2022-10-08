@@ -117,6 +117,7 @@ public class BattleSystem : MonoBehaviour
             {
                 Debug.Log("failure");
             }
+
             enemyUnit.Setup(enemyPokemon);            
             yield return dialogBox.TypeDialog($"{trainer.Name} sends out {enemyPokemon.Base.Name}");
 
