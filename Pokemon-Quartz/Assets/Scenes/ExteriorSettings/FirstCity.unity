@@ -34025,6 +34025,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c5cc1430a96694bb15832cbb5407e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healFarewell: Yep, that should do it. Try to be careful next time.
+  notHealFarewell: Quit wasting my time then. Hurry up, go on now... I got Pokemon
+    to heal.
 --- !u!1 &626273042
 GameObject:
   m_ObjectHideFlags: 0
@@ -44034,6 +44037,155 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &1886443303
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2753306704297480894, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: uniqueId
+      value: 6e5cd2e5-dd26-41f9-a18d-ec902e4bfd90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847479, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_Name
+      value: Merchant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -22.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847481, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847482, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: dialog.lines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847482, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: movementPattern.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847482, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: questToStart
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847482, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: dialog.lines.Array.data[0]
+      value: 'Looking to buy, sell, or waste my time? Heh, just kidding. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847482, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: questToComplete
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847482, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: movementPattern.Array.data[0].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162095540607847482, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: timeBetweenPattern
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5997001025733055073, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: dialog.lines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5997001025733055073, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5997001025733055073, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: dialog.lines.Array.data[0]
+      value: Here take this!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5997001025733055073, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+        type: 3}
+      propertyPath: count
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9384ac2b4ba9d364eb16156f55d845b9, type: 3}
+--- !u!1 &1886443304 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4162095540607847479, guid: 9384ac2b4ba9d364eb16156f55d845b9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1886443303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1886443305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886443304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2280da8a37b2a4882b3e5a5937521b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableItems:
+  - {fileID: 11400000, guid: 0a0e8e979035be2489eff6b4d6ca66af, type: 2}
 --- !u!1001 &1623706860297036428
 PrefabInstance:
   m_ObjectHideFlags: 0

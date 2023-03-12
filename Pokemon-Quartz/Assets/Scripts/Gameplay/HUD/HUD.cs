@@ -13,8 +13,6 @@ public class HUD : MonoBehaviour
     private Vector3 originalPos;
 
     //Handles audio
-    public AudioClip openMenu;
-    public AudioClip selectSound;
     public AudioSource audio;
 
     public bool audioSwitch = true;
@@ -64,7 +62,7 @@ public class HUD : MonoBehaviour
         image.transform.DOLocalMoveY(0, 1f);  //originalPos.y
         if (audioSwitch)
         {
-            audio.PlayOneShot(openMenu);
+            AudioManager.i.PlaySfx(AudioId.OpenPip);
             audioSwitch = false;
         }
 
@@ -89,12 +87,12 @@ public class HUD : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.RightArrow) && !disableHudToggle)
         {
-            audio.PlayOneShot(selectSound);
+            AudioManager.i.PlaySfx(AudioId.UISelect);
             ++currentSection;
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) && !disableHudToggle)
         {
-            audio.PlayOneShot(selectSound);
+            AudioManager.i.PlaySfx(AudioId.UISelect);
             --currentSection;
         }
 

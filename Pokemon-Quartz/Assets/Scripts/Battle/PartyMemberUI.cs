@@ -35,7 +35,7 @@ public class PartyMemberUI : MonoBehaviour
         if(selected)
         {
             nameText.color = GlobalSettings.i.HighlightedColor;
-            pokeImage.sprite = _pokemon.Base.FrontSprite;
+            pokeImage.sprite = _pokemon.Base.FrontSprite;                       // TO-DO: Change this to pip boy sprite later on.
         }
         else
         {

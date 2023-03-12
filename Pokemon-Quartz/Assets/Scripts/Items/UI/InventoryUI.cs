@@ -19,7 +19,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] Image downArrow;
 
     [SerializeField] PartyScreen partyScreen;
-    [SerializeField] HUD hud;
+    [SerializeField] HUD hud = null;
     [SerializeField] GameObject scrollBar;
     [SerializeField] MoveSelectionUI moveSelectionUI;
 
@@ -350,6 +350,13 @@ public class InventoryUI : MonoBehaviour
         state = InventoryUIState.Busy;
 
         var item = inventory.GetItem(selectedItem, selectedCategory);
+
+        if (GameController.Instance.State == GameState.Shop)
+        {
+            onItemUsed?.Invoke(item);
+            state = InventoryUIState.ItemSelection;
+            yield break;
+        }
 
         if (GameController.Instance.State == GameState.Battle)
         {

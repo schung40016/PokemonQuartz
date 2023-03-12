@@ -15,6 +15,8 @@ MonoBehaviour:
   name: Awakening
   description: Wakes up a sleeping Pokemon
   icon: {fileID: -7533551724283533036, guid: 0c50d42e15925d64da665aa57cfadb49, type: 3}
+  price: 100
+  isSellable: 1
   hpAmount: 0
   restoreMaxHP: 0
   ppAmount: 0

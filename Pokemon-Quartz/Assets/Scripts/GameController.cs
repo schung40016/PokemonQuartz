@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, HUD, Dialog, Cutscene, Paused, Menu, Evolution}
+public enum GameState { FreeRoam, Battle, HUD, Dialog, Cutscene, Paused, Menu, Evolution, Shop }
 
 public class GameController : MonoBehaviour
 {
@@ -82,7 +82,11 @@ public class GameController : MonoBehaviour
         {
             partyScreen.SetPartyData();
             state = stateBeforeEvolution;
+
+            AudioManager.i.PlayMusic(CurrentScene.SceneMusic, fade: true);
         };
+        ShopController.i.OnStart += () => state = GameState.Shop;
+        ShopController.i.OnFinish += () => state = GameState.FreeRoam;
     }
 
     // keep the game paused while swithcing over to next scene
@@ -148,8 +152,17 @@ public class GameController : MonoBehaviour
         battleSystem.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(true);
 
-       var playerParty = playerController.GetComponent<PokemonParty>();
-        StartCoroutine(playerParty.CheckForEvolutions());
+        var playerParty = playerController.GetComponent<PokemonParty>();
+        bool hasEvolutions = playerParty.CheckForEvolutions();
+
+        if(hasEvolutions)
+        {
+            StartCoroutine(playerParty.RunEvolutions());
+        }
+        else
+        {
+            AudioManager.i.PlayMusic(CurrentScene.SceneMusic, fade: true);
+        }
     }
 
     //Displays hud.
@@ -198,6 +211,10 @@ public class GameController : MonoBehaviour
         {
             menuController.HandleUpdate();
         }
+        else if(state == GameState.Shop)
+        {
+            ShopController.i.HandleUpdate();
+        }
     }
 
     public void SetCurrentScene(SceneDetails currScene) 
@@ -232,6 +249,22 @@ public class GameController : MonoBehaviour
     public PlayerController GetPlayerController()
     {
         return playerController;
+    }
+
+    public IEnumerator MoveCamera(Vector2 moveOffSet, bool waitForFadeOut = false)
+    {
+        yield return Fader.i.FadeIn(0.5f);
+
+        worldCamera.transform.position += new Vector3(moveOffSet.x, moveOffSet.y);
+
+        if(waitForFadeOut)
+        {
+            yield return Fader.i.FadeOut(0.5f);
+        }
+        else
+        {
+            StartCoroutine(Fader.i.FadeOut(0.5f));
+        }
     }
 
     public GameState State => state;

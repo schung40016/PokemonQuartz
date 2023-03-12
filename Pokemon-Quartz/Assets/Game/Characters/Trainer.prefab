@@ -138,7 +138,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1116919737
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 7339852029011860316, guid: 8196fa28fd94b2243a37e9fa292b36a0,
     type: 3}
@@ -229,7 +229,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 3756351
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: a995bafb557527e4cbc107e82a588e21, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -354,6 +354,7 @@ MonoBehaviour:
     - Your pokemons are sure strong!
   exclamation: {fileID: 7365810491448813032}
   fov: {fileID: 7365810491276584719}
+  trainerAppearsClip: {fileID: 8300000, guid: 6f6a842d241f86a4e86cf498fc6a4693, type: 3}
 --- !u!114 &7365810491784966392
 MonoBehaviour:
   m_ObjectHideFlags: 0

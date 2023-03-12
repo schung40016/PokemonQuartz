@@ -30,13 +30,6 @@ public class StationPlaylist : MonoBehaviour
 
     #endregion
 
-    public void PlayMusicClip(AudioClip music)
-    {
-        radio.Stop();
-        radio.clip = music;
-        radio.Play();
-    }
-
     public void StopMusic()
     {
         if(musicLoop != null)
@@ -51,7 +44,7 @@ public class StationPlaylist : MonoBehaviour
     public void StartMusic()
     {
         musicQueue.musicSwitch = true;
-        musicLoop = StartCoroutine(musicQueue.LoopMusic(this, 0, PlayMusicClip));
+        musicLoop = StartCoroutine(musicQueue.LoopMusic(this, 0));
     }
 }
 
@@ -66,19 +59,19 @@ public class MusicQueue
         this.clips = clips;
     }
 
-    public IEnumerator LoopMusic(MonoBehaviour player, float delay, System.Action<AudioClip> playFunction)
+    public IEnumerator LoopMusic(MonoBehaviour player, float delay)
     {
         while(musicSwitch)
         {
-            yield return player.StartCoroutine(Run(RandomizeList(clips), delay, playFunction));
+            yield return player.StartCoroutine(Run(RandomizeList(clips), delay));
         }
     }
 
-    public IEnumerator Run(List<AudioClip> tracks, float delay, System.Action<AudioClip> playFunction)
+    public IEnumerator Run(List<AudioClip> tracks, float delay)
     {
         foreach(AudioClip clip in tracks)
         {
-            playFunction(clip);
+            AudioManager.i.PlayMusic(clip);
 
             yield return new WaitForSeconds(clip.length + delay);
             // BUG: Can't play the next song in queue because the above code stops working.

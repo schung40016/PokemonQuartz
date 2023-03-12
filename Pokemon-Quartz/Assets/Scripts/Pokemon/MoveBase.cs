@@ -20,6 +20,7 @@ public class MoveBase : ScriptableObject
     [SerializeField] MoveEffects effects;
     [SerializeField] List<SecondaryEffects> secondaries;
     [SerializeField] MoveTarget target;
+    [SerializeField] AudioClip sound;
 
     public string Name
     {
@@ -80,6 +81,8 @@ public class MoveBase : ScriptableObject
     {
         get { return target; }
     }
+
+    public AudioClip Sound => sound;
 }
 
 [System.Serializable]

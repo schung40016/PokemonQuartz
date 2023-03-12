@@ -482,6 +482,9 @@ MonoBehaviour:
     type: 3}
   moveSelectionUI: {fileID: 0}
   inventoryUI: {fileID: 4784683496887061105}
+  wildBattleMusic: {fileID: 8300000, guid: 9a662dac70cbe4f4b93b25336d65a410, type: 3}
+  trainerBattleMusic: {fileID: 8300000, guid: 21f72dbb165d84c4a89fa35e19efa283, type: 3}
+  battleVictoryMusic: {fileID: 8300000, guid: d872f8feb85f10842bf8fc0e86b257fc, type: 3}
 --- !u!82 &7210962756870771074
 AudioSource:
   m_ObjectHideFlags: 0
